@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#0e1621] text-slate-100 select-none">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tallentex Discussion Grp 10th</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23229ED9'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tg: {
+              bg: '#0e1621',
+              header: '#17212b',
+              surface: '#17212b',
+              sidebar: '#0e1621',
+              border: '#0b1118',
+              accent: '#5288c1',
+              accentHover: '#6499d3',
+              bubbleIn: '#182533',
+              bubbleOut: '#2b5278',
+              muted: '#708499',
+              dateBadge: '#18222d'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+      background-color: #0e1621;
+    }
+    
+    /* Authentic Telegram Desktop Dark Pattern SVG Wallpaper */
+    .tg-chat-pattern {
+      background-color: #0e1621;
+      background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' opacity='0.035'%3E%3Cpath fill='%23ffffff' d='M60 15a45 45 0 1 0 45 45 45 45 0 0 0-45-45zm0 82a37 37 0 1 1 37-37 37 37 0 0 1-37 37zm-7-51h14v10H53zm0 18h14v18H53z'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='20' r='5'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='20' r='6'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='100' r='6'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='5'/%3E%3Cpath fill='%23ffffff' d='M25 50l6 8-8 6 8 6-6 8-6-8-8 6 6-8-6-8 8-6z'/%3E%3C/svg%3E");
+      background-attachment: fixed;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(112, 132, 153, 0.25);
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(112, 132, 153, 0.45);
+    }
+    .message-bubble {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      word-break: break-word;
+    }
+    .highlight-flash {
+      animation: flash-highlight 1.6s ease-out;
+    }
+    @keyframes flash-highlight {
+      0% { background-color: rgba(82, 136, 193, 0.45); }
+      100% { background-color: transparent; }
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col antialiased text-slate-100">
+
+  <!-- TOP HEADER -->
+  <header class="h-14 flex-shrink-0 bg-tg-header border-b border-tg-border px-4 flex items-center justify-between z-30 shadow-sm">
+    <!-- Clickable Header opens Group Info Sidebar -->
+    <div id="openGroupInfoBtn" class="flex items-center gap-3 cursor-pointer hover:opacity-90 transition min-w-0">
+      <div class="relative w-10 h-10 rounded-full overflow-hidden bg-[#2b5278] flex items-center justify-center font-bold text-white flex-shrink-0 shadow border border-slate-700">
+        <img id="headerGroupAvatar" src="" alt="Grp" class="w-full h-full object-cover hidden" />
+        <span id="headerGroupFallback" class="text-base font-bold">T</span>
+      </div>
+
+      <div class="flex flex-col min-w-0">
+        <div class="flex items-center gap-1.5">
+          <h1 id="headerGroupTitle" class="text-sm font-semibold text-white truncate">Tallentex Discussion Grp 10th</h1>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-tg-muted"></i>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-tg-muted truncate">
+          <span id="headerMemberCounter">0 members</span>
+          <span class="inline-block w-1 h-1 rounded-full bg-slate-500"></span>
+          <span class="text-emerald-400 font-medium text-[11px]" id="headerOnlineCounter">1 online</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Profile & Action Bar -->
+    <div class="flex items-center gap-2">
+      <button id="openMyProfileBtn" class="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-tg-bg/70 hover:bg-tg-bg border border-tg-border text-xs text-slate-200 transition shadow-sm" title="Your Settings">
+        <img id="myHeaderAvatar" src="" class="w-6 h-6 rounded-full object-cover border border-slate-600 hidden" />
+        <div id="myHeaderFallback" class="w-6 h-6 rounded-full bg-tg-accent text-white flex items-center justify-center font-bold text-[11px]">?</div>
+        <span id="myHeaderHandle" class="font-medium max-w-[90px] truncate">@loading</span>
+        <span id="myRoleTagBadge" class="hidden text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PINNED MESSAGE BANNER -->
+  <div id="pinnedMessageBar" class="hidden h-11 bg-tg-header/95 backdrop-blur border-b border-tg-border px-4 flex items-center justify-between text-xs z-20 cursor-pointer hover:bg-tg-header transition">
+    <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5 flex-1" id="pinnedBannerContent">
+      <i data-lucide="pin" class="w-3.5 h-3.5 text-tg-accent flex-shrink-0"></i>
+      <div class="min-w-0">
+        <p class="font-bold text-tg-accent leading-none text-[11px]">Pinned Message</p>
+        <p id="pinnedBannerText" class="text-slate-300 truncate leading-tight text-[11px] mt-0.5">...</p>
+      </div>
+    </div>
+    <button id="unpinMessageBtn" class="text-tg-muted hover:text-red-400 p-1 rounded transition hidden" title="Unpin message (Admin)">
+      <i data-lucide="x" class="w-3.5 h-3.5"></i>
+    </button>
+  </div>
+
+  <!-- CHAT CONTAINER -->
+  <main class="flex-1 flex flex-col min-h-0 relative tg-chat-pattern">
+    
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 border border-slate-700 text-white text-xs px-4 py-2 rounded-xl shadow-2xl flex items-center gap-2 transform -translate-y-8 opacity-0 pointer-events-none transition-all duration-200">
+      <i data-lucide="info" class="w-4 h-4 text-tg-accent" id="toastIcon"></i>
+      <span id="toastMessage">Notification</span>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="chatMessages" class="flex-1 overflow-y-auto px-3 sm:px-8 py-4 space-y-2.5 custom-scroll select-text">
+      <div id="chatLoadingIndicator" class="flex flex-col items-center justify-center h-full text-tg-muted gap-2 text-xs select-none">
+        <div class="w-6 h-6 border-2 border-tg-muted/30 border-t-tg-accent rounded-full animate-spin"></div>
+        <span>Syncing Telegram vault...</span>
+      </div>
+    </div>
+
+    <!-- Reply Drawer -->
+    <div id="replyBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
+      <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5">
+        <i data-lucide="reply" class="w-4 h-4 text-tg-accent flex-shrink-0"></i>
+        <div class="min-w-0">
+          <p id="replyUserText" class="font-bold text-tg-accent truncate leading-tight">Reply</p>
+          <p id="replySnippetText" class="text-tg-muted truncate leading-normal text-[11px]">Message</p>
+        </div>
+      </div>
+      <button id="cancelReplyBtn" class="text-tg-muted hover:text-white p-1 rounded transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Media Preview Drawer -->
+    <div id="attachmentBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div id="attachmentPreviewWrapper" class="w-8 h-8 rounded bg-tg-border flex items-center justify-center overflow-hidden flex-shrink-0">
+          <i data-lucide="file" class="w-4 h-4 text-tg-muted"></i>
+        </div>
+        <div class="min-w-0">
+          <p id="attachmentNameText" class="font-medium text-slate-200 truncate">file.pdf</p>
+          <p id="attachmentSizeText" class="text-[10px] text-tg-muted">0 KB</p>
+        </div>
+      </div>
+      <button id="cancelAttachmentBtn" class="text-tg-muted hover:text-white p-1 rounded transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Emoji Drawer -->
+    <div id="emojiPicker" class="hidden absolute bottom-16 left-4 bg-tg-header border border-tg-border rounded-2xl p-2 shadow-2xl z-40 grid grid-cols-7 gap-1 w-64 select-none">
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">👍</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">❤️</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🔥</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">😂</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">😮</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">👏</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🎉</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🎯</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">💯</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">⚡</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">📚</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🚀</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🙏</button>
+      <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🧠</button>
+    </div>
+
+    <!-- BOTTOM INPUT BAR -->
+    <div class="bg-tg-header border-t border-tg-border px-3 sm:px-4 py-2 flex items-end gap-2 relative z-20 select-none">
+      <input type="file" id="fileInput" class="hidden" />
+      <button id="attachmentBtn" type="button" class="p-2 text-tg-muted hover:text-tg-accent hover:bg-tg-bg rounded-full transition flex-shrink-0" title="Attach file">
+        <i data-lucide="paperclip" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex-1 bg-tg-bg border border-tg-border rounded-2xl flex items-center px-3 py-1.5 focus-within:border-tg-accent transition">
+        <textarea 
+          id="messageInput" 
+          rows="1" 
+          placeholder="Write a message..." 
+          class="w-full bg-transparent text-sm text-slate-100 placeholder-tg-muted focus:outline-none resize-none max-h-32 custom-scroll py-0.5 select-text"
+        ></textarea>
+        
+        <button id="emojiBtn" type="button" class="p-1 text-tg-muted hover:text-amber-400 rounded-lg transition ml-1 flex-shrink-0" title="Emoji">
+          <i data-lucide="smile" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="relative flex-shrink-0">
+        <button id="sendBtn" type="button" class="w-10 h-10 rounded-full bg-tg-accent hover:bg-tg-accentHover text-white flex items-center justify-center transition shadow disabled:opacity-50">
+          <i data-lucide="send" class="w-4 h-4 ml-0.5"></i>
+        </button>
+        <div id="cooldownRing" class="hidden absolute -top-1 -right-1 bg-amber-500 text-slate-950 font-extrabold text-[9px] w-5 h-5 rounded-full flex items-center justify-center shadow">
+          3s
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- GROUP INFO DRAWER (WhatsApp / Telegram Styled) -->
+  <div id="groupInfoDrawer" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end">
+    <div class="bg-tg-header w-full max-w-md h-full flex flex-col border-l border-tg-border shadow-2xl animate-in slide-in-from-right duration-200">
+      
+      <!-- Drawer Header -->
+      <div class="h-14 px-4 border-b border-tg-border flex items-center justify-between flex-shrink-0 bg-tg-header">
+        <div class="flex items-center gap-2">
+          <button id="closeGroupInfoBtn" class="p-1.5 text-tg-muted hover:text-white rounded-lg transition">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
+          <span class="font-bold text-sm text-white">Group Info</span>
+        </div>
+        <!-- Owner Edit Button -->
+        <button id="ownerEditGroupBtn" class="hidden text-xs font-semibold text-tg-accent hover:underline flex items-center gap-1">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+          <span>Edit Group</span>
+        </button>
+      </div>
+
+      <!-- Drawer Body -->
+      <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
+        
+        <!-- Group Avatar, Name, Description -->
+        <div class="flex flex-col items-center text-center">
+          <div class="relative w-24 h-24 rounded-full overflow-hidden bg-[#2b5278] flex items-center justify-center text-white text-3xl font-bold shadow-lg border-2 border-slate-700">
+            <img id="drawerGroupAvatar" src="" class="w-full h-full object-cover hidden" />
+            <span id="drawerGroupFallback">T</span>
+          </div>
+
+          <h2 id="drawerGroupName" class="text-lg font-bold text-white mt-3">Tallentex Discussion Grp 10th</h2>
+          <p id="drawerGroupDesc" class="text-xs text-tg-muted mt-1 px-4 leading-relaxed">Allen Tallentex 2025/2026 Academic Study Group & Question Solving.</p>
+          <span id="drawerGroupTotalBadge" class="mt-2 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-tg-bg text-tg-muted border border-tg-border">200 Members Capacity</span>
+        </div>
+
+        <hr class="border-tg-border" />
+
+        <!-- Members Section (up to 200 members displayed) -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-tg-muted" id="drawerMembersCountTitle">Members (0)</span>
+            <span class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online
+            </span>
+          </div>
+
+          <div id="membersListContainer" class="space-y-2 max-h-96 overflow-y-auto custom-scroll pr-1">
+            <!-- Members Rendered Here -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- OWNER EDIT GROUP MODAL -->
+  <div id="editGroupModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-tg-header border border-tg-border rounded-3xl w-full max-w-md p-6 shadow-2xl">
+      <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+        <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
+        <span>Owner Settings: Edit Group Profile</span>
+      </h3>
+
+      <div class="space-y-3.5 text-xs">
+        <div>
+          <label class="block text-tg-muted font-bold mb-1">Group Name</label>
+          <input type="text" id="editGroupNameInput" class="w-full bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent" />
+        </div>
+
+        <div>
+          <label class="block text-tg-muted font-bold mb-1">Group Description</label>
+          <textarea id="editGroupDescInput" rows="2" class="w-full bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-tg-muted font-bold mb-1">Group Icon URL or Upload</label>
+          <div class="flex items-center gap-2">
+            <input type="text" id="editGroupAvatarUrlInput" placeholder="https://..." class="flex-1 bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent" />
+            <input type="file" id="groupIconFileInput" accept="image/*" class="hidden" />
+            <button type="button" id="triggerUploadGroupIconBtn" class="px-3 py-2 bg-tg-bg hover:bg-tg-border border border-tg-border rounded-xl text-slate-300">
+              <i data-lucide="upload" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-tg-border">
+          <button id="closeEditGroupModalBtn" class="px-4 py-2 rounded-xl text-tg-muted hover:text-white transition">Cancel</button>
+          <button id="saveGroupDetailsBtn" class="px-4 py-2 rounded-xl bg-tg-accent hover:bg-tg-accentHover text-white font-bold transition">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING & MY PROFILE MODAL -->
+  <div id="profileModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-tg-header border border-tg-border rounded-3xl w-full max-w-md p-6 shadow-2xl">
+      <div class="text-center mb-5">
+        <div class="w-16 h-16 rounded-full bg-tg-accent/20 border border-tg-accent/40 flex items-center justify-center mx-auto mb-2.5 text-tg-accent">
+          <i data-lucide="user-check" class="w-8 h-8"></i>
+        </div>
+        <h2 id="modalProfileTitle" class="text-lg font-bold text-white">Join Tallentex Vault</h2>
+        <p class="text-xs text-tg-muted mt-0.5">Set up your handle to chat with Class 10 toppers</p>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-tg-muted mb-1">Your Handle</label>
+          <div class="relative flex items-center">
+            <span class="absolute left-3 text-tg-accent font-bold text-sm">@</span>
+            <input 
+              type="text" 
+              id="modalHandleInput" 
+              maxlength="20"
+              placeholder="e.g. meoponly or rank1_allen" 
+              class="w-full bg-tg-bg border border-tg-border rounded-xl pl-8 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-tg-accent"
+            />
+          </div>
+          <p id="modalHandleStatus" class="text-[11px] mt-1 text-tg-muted">Handle must be unique. Alphanumeric & underscore (3-20 chars).</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-tg-muted mb-1">Avatar</label>
+          <div class="flex items-center gap-3">
+            <div id="modalAvatarPreview" class="w-12 h-12 rounded-full bg-tg-bg border border-tg-border flex items-center justify-center text-tg-accent font-bold overflow-hidden flex-shrink-0">
+              ?
+            </div>
+            <input type="file" id="modalAvatarFileInput" accept="image/*" class="hidden" />
+            <button type="button" id="modalAvatarUploadBtn" class="flex-1 py-2 px-3 rounded-xl bg-tg-bg hover:bg-tg-border border border-tg-border text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5">
+              <i data-lucide="upload" class="w-4 h-4 text-tg-accent"></i>
+              <span>Upload Custom Photo</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <span class="block text-[11px] text-tg-muted mb-1">Presets:</span>
+          <div class="flex gap-2 justify-between">
+            <button type="button" data-preset="https://api.dicebear.com/7.x/bottts/svg?seed=meoponly" class="preset-btn w-9 h-9 rounded-full border border-tg-border hover:border-tg-accent overflow-hidden">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=meoponly" alt="avatar" />
+            </button>
+            <button type="button" data-preset="https://api.dicebear.com/7.x/bottts/svg?seed=AllenTopper" class="preset-btn w-9 h-9 rounded-full border border-tg-border hover:border-tg-accent overflow-hidden">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AllenTopper" alt="avatar" />
+            </button>
+            <button type="button" data-preset="https://api.dicebear.com/7.x/bottts/svg?seed=KotaStar" class="preset-btn w-9 h-9 rounded-full border border-tg-border hover:border-tg-accent overflow-hidden">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=KotaStar" alt="avatar" />
+            </button>
+            <button type="button" data-preset="https://api.dicebear.com/7.x/bottts/svg?seed=OlympiadAce" class="preset-btn w-9 h-9 rounded-full border border-tg-border hover:border-tg-accent overflow-hidden">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=OlympiadAce" alt="avatar" />
+            </button>
+            <button type="button" data-preset="https://api.dicebear.com/7.x/bottts/svg?seed=JEE2028" class="preset-btn w-9 h-9 rounded-full border border-tg-border hover:border-tg-accent overflow-hidden">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=JEE2028" alt="avatar" />
+            </button>
+          </div>
+        </div>
+
+        <button 
+          id="saveProfileBtn" 
+          type="button" 
+          class="w-full py-2.5 rounded-xl bg-tg-accent hover:bg-tg-accentHover text-white font-bold text-sm transition shadow mt-2"
+        >
+          Confirm Handle
+        </button>
+        <button id="cancelProfileModalBtn" type="button" class="hidden w-full py-1.5 text-xs text-tg-muted hover:text-white transition">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNED LOCK OVERLAY -->
+  <div id="bannedScreen" class="hidden fixed inset-0 z-50 bg-red-950/95 backdrop-blur-md flex items-center justify-center p-6 text-center select-none">
+    <div class="bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full shadow-2xl">
+      <div class="w-16 h-16 rounded-full bg-red-600/20 border border-red-500 flex items-center justify-center mx-auto mb-4 text-red-500">
+        <i data-lucide="shield-alert" class="w-8 h-8"></i>
+      </div>
+      <h2 class="text-xl font-bold text-white mb-2">Access Terminated</h2>
+      <p class="text-xs text-red-300 leading-relaxed mb-4">
+        Your device & IP were automatically banned for sending prohibited or abusive words in this group.
+      </p>
+      <div class="p-3 bg-red-950/50 rounded-xl border border-red-900/50 text-[11px] font-mono text-red-400">
+        Status: Permanently Banned
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE APP LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { 
+      getFirestore, collection, addDoc, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc,
+      query, orderBy, onSnapshot, serverTimestamp, where, limit 
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    import { 
+      getStorage, ref, uploadBytes, getDownloadURL 
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDvyIQNVjXPnVnYQWIcPrr5lrEAKbGr54k",
+      authDomain: "ewtube-b3413.firebaseapp.com",
+      databaseURL: "https://ewtube-b3413-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ewtube-b3413",
+      storageBucket: "ewtube-b3413.firebasestorage.app",
+      messagingSenderId: "67454816410",
+      appId: "1:67454816410:web:27d326bf9668e5c64fcf23"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const OWNER_HANDLE = "meoponly";
+
+    const PROFANITY_LIST = [
+      "abuse", "fuck", "bitch", "asshole", "bastard", "dick", "pussy",
+      "slut", "whore", "cunt", "chutiya", "madarchod", "bhenchod", "gandu", "bsdk",
+      "harami", "lauda", "lodu", "randi", "kamina"
+    ];
+
+    let currentUser = {
+      uid: localStorage.getItem("ttx_uid") || null,
+      handle: localStorage.getItem("ttx_handle") || null,
+      avatarUrl: localStorage.getItem("ttx_avatar") || null,
+      role: 'member' // 'owner' | 'admin' | 'member'
+    };
+
+    let clientIp = "127.0.0.1";
+    let activeReply = null;
+    let pendingAttachment = null;
+    let isCooldown = false;
+    let cachedPinnedDoc = null;
+    let groupMetadata = {
+      name: "Tallentex Discussion Grp 10th",
+      description: "Allen Tallentex 2025/2026 Academic Study Group & Question Solving.",
+      avatarUrl: ""
+    };
+
+    // DOM Elements
+    const chatMessages = document.getElementById("chatMessages");
+    const messageInput = document.getElementById("messageInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const fileInput = document.getElementById("fileInput");
+    const attachmentBtn = document.getElementById("attachmentBtn");
+    const replyBar = document.getElementById("replyBar");
+    const replyUserText = document.getElementById("replyUserText");
+    const replySnippetText = document.getElementById("replySnippetText");
+    const cancelReplyBtn = document.getElementById("cancelReplyBtn");
+    const attachmentBar = document.getElementById("attachmentBar");
+    const attachmentNameText = document.getElementById("attachmentNameText");
+    const attachmentSizeText = document.getElementById("attachmentSizeText");
+    const cancelAttachmentBtn = document.getElementById("cancelAttachmentBtn");
+    const emojiBtn = document.getElementById("emojiBtn");
+    const emojiPicker = document.getElementById("emojiPicker");
+    const cooldownRing = document.getElementById("cooldownRing");
+    const toast = document.getElementById("toast");
+    const bannedScreen = document.getElementById("bannedScreen");
+
+    // Header & Profile DOM
+    const openMyProfileBtn = document.getElementById("openMyProfileBtn");
+    const myHeaderAvatar = document.getElementById("myHeaderAvatar");
+    const myHeaderFallback = document.getElementById("myHeaderFallback");
+    const myHeaderHandle = document.getElementById("myHeaderHandle");
+    const myRoleTagBadge = document.getElementById("myRoleTagBadge");
+    
+    // Group Info Drawer DOM
+    const openGroupInfoBtn = document.getElementById("openGroupInfoBtn");
+    const groupInfoDrawer = document.getElementById("groupInfoDrawer");
+    const closeGroupInfoBtn = document.getElementById("closeGroupInfoBtn");
+    const headerGroupAvatar = document.getElementById("headerGroupAvatar");
+    const headerGroupFallback = document.getElementById("headerGroupFallback");
+    const headerGroupTitle = document.getElementById("headerGroupTitle");
+    const headerMemberCounter = document.getElementById("headerMemberCounter");
+    const headerOnlineCounter = document.getElementById("headerOnlineCounter");
+    
+    const drawerGroupAvatar = document.getElementById("drawerGroupAvatar");
+    const drawerGroupFallback = document.getElementById("drawerGroupFallback");
+    const drawerGroupName = document.getElementById("drawerGroupName");
+    const drawerGroupDesc = document.getElementById("drawerGroupDesc");
+    const drawerMembersCountTitle = document.getElementById("drawerMembersCountTitle");
+    const membersListContainer = document.getElementById("membersListContainer");
+    const ownerEditGroupBtn = document.getElementById("ownerEditGroupBtn");
+
+    // Owner Edit Modal DOM
+    const editGroupModal = document.getElementById("editGroupModal");
+    const closeEditGroupModalBtn = document.getElementById("closeEditGroupModalBtn");
+    const saveGroupDetailsBtn = document.getElementById("saveGroupDetailsBtn");
+    const editGroupNameInput = document.getElementById("editGroupNameInput");
+    const editGroupDescInput = document.getElementById("editGroupDescInput");
+    const editGroupAvatarUrlInput = document.getElementById("editGroupAvatarUrlInput");
+    const groupIconFileInput = document.getElementById("groupIconFileInput");
+    const triggerUploadGroupIconBtn = document.getElementById("triggerUploadGroupIconBtn");
+
+    // Pinned Message DOM
+    const pinnedMessageBar = document.getElementById("pinnedMessageBar");
+    const pinnedBannerContent = document.getElementById("pinnedBannerContent");
+    const pinnedBannerText = document.getElementById("pinnedBannerText");
+    const unpinMessageBtn = document.getElementById("unpinMessageBtn");
+
+    // Modal Handle & Profile DOM
+    const profileModal = document.getElementById("profileModal");
+    const modalHandleInput = document.getElementById("modalHandleInput");
+    const modalHandleStatus = document.getElementById("modalHandleStatus");
+    const modalAvatarPreview = document.getElementById("modalAvatarPreview");
+    const modalAvatarFileInput = document.getElementById("modalAvatarFileInput");
+    const modalAvatarUploadBtn = document.getElementById("modalAvatarUploadBtn");
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const cancelProfileModalBtn = document.getElementById("cancelProfileModalBtn");
+
+    if (!currentUser.uid) {
+      currentUser.uid = 'u_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+      localStorage.setItem("ttx_uid", currentUser.uid);
+    }
+
+    function triggerToast(msg, icon = "info", isError = false) {
+      document.getElementById("toastMessage").textContent = msg;
+      const tIcon = document.getElementById("toastIcon");
+      tIcon.setAttribute("data-lucide", isError ? "alert-circle" : icon);
+      toast.classList.remove("-translate-y-8", "opacity-0", "pointer-events-none");
+      toast.classList.add("translate-y-0", "opacity-100");
+      lucide.createIcons();
+      setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("-translate-y-8", "opacity-0", "pointer-events-none");
+      }, 2400);
+    }
+
+    async function checkBanStatus() {
+      try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const d = await res.json();
+        clientIp = d.ip || "127.0.0.1";
+      } catch (e) {
+        clientIp = "127.0.0.1";
+      }
+
+      try {
+        const banUidSnap = await getDoc(doc(db, "banned_users", currentUser.uid));
+        if (banUidSnap.exists()) {
+          lockScreenAsBanned();
+          return true;
+        }
+
+        const q = query(collection(db, "banned_users"), where("ip", "==", clientIp), limit(1));
+        const ipSnap = await getDocs(q);
+        if (!ipSnap.empty) {
+          lockScreenAsBanned();
+          return true;
+        }
+      } catch (err) {
+        console.warn("Ban check:", err);
+      }
+      return false;
+    }
+
+    function lockScreenAsBanned() {
+      localStorage.clear();
+      bannedScreen.classList.remove("hidden");
+      if (profileModal) profileModal.classList.add("hidden");
+    }
+
+    // Determine Role: meoponly is always owner; other admins stored in DB
+    function resolveUserRole(handle, dbRole) {
+      if (handle && handle.toLowerCase() === OWNER_HANDLE) {
+        return 'owner';
+      }
+      if (dbRole === 'admin' || dbRole === 'owner') {
+        return dbRole;
+      }
+      return 'member';
+    }
+
+    function updateTopProfileUI() {
+      if (!currentUser.handle) {
+        myHeaderHandle.textContent = "Guest";
+        myRoleTagBadge.classList.add("hidden");
+        return;
+      }
+
+      currentUser.role = resolveUserRole(currentUser.handle, currentUser.role);
+      myHeaderHandle.textContent = `@${currentUser.handle}`;
+
+      if (currentUser.avatarUrl) {
+        myHeaderAvatar.src = currentUser.avatarUrl;
+        myHeaderAvatar.classList.remove("hidden");
+        myHeaderFallback.classList.add("hidden");
+      } else {
+        myHeaderFallback.textContent = currentUser.handle.charAt(0).toUpperCase();
+        myHeaderAvatar.classList.add("hidden");
+        myHeaderFallback.classList.remove("hidden");
+      }
+
+      // Role tag
+      if (currentUser.role === 'owner') {
+        myRoleTagBadge.textContent = "OWNER";
+        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30";
+        myRoleTagBadge.classList.remove("hidden");
+        ownerEditGroupBtn.classList.remove("hidden");
+      } else if (currentUser.role === 'admin') {
+        myRoleTagBadge.textContent = "ADMIN";
+        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30";
+        myRoleTagBadge.classList.remove("hidden");
+        ownerEditGroupBtn.classList.add("hidden");
+      } else {
+        myRoleTagBadge.classList.add("hidden");
+        ownerEditGroupBtn.classList.add("hidden");
+      }
+    }
+
+    // Sync Group Metadata (Title, Description, Icon) Real-time
+    function listenToGroupMetadata() {
+      const groupDocRef = doc(db, "group_info", "main");
+      onSnapshot(groupDocRef, (snap) => {
+        if (snap.exists()) {
+          groupMetadata = { ...groupMetadata, ...snap.data() };
+        } else {
+          // Initialize default group info
+          setDoc(groupDocRef, groupMetadata);
+        }
+
+        headerGroupTitle.textContent = groupMetadata.name;
+        drawerGroupName.textContent = groupMetadata.name;
+        drawerGroupDesc.textContent = groupMetadata.description;
+
+        if (groupMetadata.avatarUrl) {
+          headerGroupAvatar.src = groupMetadata.avatarUrl;
+          headerGroupAvatar.classList.remove("hidden");
+          headerGroupFallback.classList.add("hidden");
+
+          drawerGroupAvatar.src = groupMetadata.avatarUrl;
+          drawerGroupAvatar.classList.remove("hidden");
+          drawerGroupFallback.classList.add("hidden");
+        } else {
+          headerGroupAvatar.classList.add("hidden");
+          headerGroupFallback.classList.remove("hidden");
+          headerGroupFallback.textContent = groupMetadata.name.charAt(0).toUpperCase();
+
+          drawerGroupAvatar.classList.add("hidden");
+          drawerGroupFallback.classList.remove("hidden");
+          drawerGroupFallback.textContent = groupMetadata.name.charAt(0).toUpperCase();
+        }
+      });
+    }
+
+    // Sync Members Real-Time (Up to 200 members list with tags & admin actions)
+    let allMembersCache = [];
+    function listenToMembers() {
+      const q = query(collection(db, "users"), limit(200));
+      onSnapshot(q, (snapshot) => {
+        allMembersCache = [];
+        snapshot.forEach((d) => {
+          const u = d.data();
+          u.uid = d.id;
+          u.role = resolveUserRole(u.handle, u.role);
+          allMembersCache.push(u);
+        });
+
+        // Update counts
+        const totalCount = allMembersCache.length;
+        headerMemberCounter.textContent = `${totalCount} member${totalCount === 1 ? '' : 's'}`;
+        headerOnlineCounter.textContent = `${Math.max(1, Math.min(totalCount, Math.ceil(totalCount * 0.75)))} online`;
+        drawerMembersCountTitle.textContent = `Members (${totalCount} / 200)`;
+
+        // Refresh user role in local cache if updated remotely
+        const me = allMembersCache.find(m => m.uid === currentUser.uid);
+        if (me) {
+          currentUser.role = me.role;
+          updateTopProfileUI();
+        }
+
+        renderMembersDrawerList();
+      });
+    }
+
+    function renderMembersDrawerList() {
+      const isMePrivileged = currentUser.role === 'owner' || currentUser.role === 'admin';
+
+      membersListContainer.innerHTML = allMembersCache.map(member => {
+        const isMemberOwner = member.role === 'owner';
+        const isMemberAdmin = member.role === 'admin';
+
+        let badgeHtml = "";
+        if (isMemberOwner) {
+          badgeHtml = `<span class="text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30">Owner</span>`;
+        } else if (isMemberAdmin) {
+          badgeHtml = `<span class="text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30">Admin</span>`;
+        }
+
+        // Action Menu for owner/admin:
+        // - No one can delete or demote meoponly (owner).
+        // - Admin/Owner can promote normal members to admin.
+        let actionBtn = "";
+        if (isMePrivileged && !isMemberOwner && member.uid !== currentUser.uid) {
+          if (!isMemberAdmin) {
+            actionBtn = `
+              <button onclick="window.promoteToAdmin('${member.uid}', '${member.handle}')" class="text-[11px] px-2 py-1 rounded-lg bg-tg-bg hover:bg-tg-border border border-tg-border text-sky-400 font-semibold transition">
+                Promote Admin
+              </button>
+            `;
+          } else if (currentUser.role === 'owner') {
+            actionBtn = `
+              <button onclick="window.demoteAdmin('${member.uid}', '${member.handle}')" class="text-[11px] px-2 py-1 rounded-lg bg-tg-bg hover:bg-tg-border border border-tg-border text-red-400 font-semibold transition">
+                Dismiss Admin
+              </button>
+            `;
+          }
+        }
+
+        return `
+          <div class="flex items-center justify-between p-2 rounded-xl hover:bg-tg-bg/60 transition border border-transparent hover:border-tg-border">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-full bg-[#2b5278] overflow-hidden flex items-center justify-center font-bold text-white text-xs flex-shrink-0">
+                <img src="${member.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + member.handle}" class="w-full h-full object-cover" />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <p class="text-xs font-semibold text-white truncate">@${member.handle || 'user'}</p>
+                  ${badgeHtml}
+                </div>
+                <p class="text-[11px] text-tg-muted">Class 10 Aspirant</p>
+              </div>
+            </div>
+            <div>${actionBtn}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Role Actions: Promote & Demote
+    window.promoteToAdmin = async function(targetUid, targetHandle) {
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
+        triggerToast("Only admins can promote users", "alert-triangle", true);
+        return;
+      }
+      try {
+        await updateDoc(doc(db, "users", targetUid), { role: "admin" });
+        await addDoc(collection(db, "messages"), {
+          type: "system",
+          text: `@${currentUser.handle} promoted @${targetHandle} to Admin.`,
+          timestamp: serverTimestamp()
+        });
+        triggerToast(`@${targetHandle} is now an Admin`, "shield-check");
+      } catch (e) {
+        triggerToast("Action failed", "alert-circle", true);
+      }
+    };
+
+    window.demoteAdmin = async function(targetUid, targetHandle) {
+      if (targetHandle.toLowerCase() === OWNER_HANDLE) {
+        triggerToast("Cannot modify the group Owner!", "shield-alert", true);
+        return;
+      }
+      if (currentUser.role !== 'owner') {
+        triggerToast("Only the Owner can dismiss admins", "shield-alert", true);
+        return;
+      }
+      try {
+        await updateDoc(doc(db, "users", targetUid), { role: "member" });
+        await addDoc(collection(db, "messages"), {
+          type: "system",
+          text: `@${currentUser.handle} demoted @${targetHandle} to Member.`,
+          timestamp: serverTimestamp()
+        });
+        triggerToast(`@${targetHandle} dismissed from admin`, "info");
+      } catch (e) {
+        triggerToast("Action failed", "alert-circle", true);
+      }
+    };
+
+    // Owner Edit Group Logic
+    ownerEditGroupBtn.addEventListener("click", () => {
+      editGroupNameInput.value = groupMetadata.name;
+      editGroupDescInput.value = groupMetadata.description;
+      editGroupAvatarUrlInput.value = groupMetadata.avatarUrl || "";
+      editGroupModal.classList.remove("hidden");
+    });
+
+    closeEditGroupModalBtn.addEventListener("click", () => editGroupModal.classList.add("hidden"));
+
+    triggerUploadGroupIconBtn.addEventListener("click", () => groupIconFileInput.click());
+
+    groupIconFileInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      triggerToast("Uploading icon...", "upload");
+      try {
+        const storageRef = ref(storage, `group_icons/group_${Date.now()}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        editGroupAvatarUrlInput.value = url;
+        triggerToast("Icon uploaded!", "check");
+      } catch (err) {
+        triggerToast("Failed to upload icon", "alert-triangle", true);
+      }
+    });
+
+    saveGroupDetailsBtn.addEventListener("click", async () => {
+      const newName = editGroupNameInput.value.trim();
+      const newDesc = editGroupDescInput.value.trim();
+      const newUrl = editGroupAvatarUrlInput.value.trim();
+
+      if (!newName) {
+        triggerToast("Group name cannot be empty", "alert-circle", true);
+        return;
+      }
+
+      try {
+        await setDoc(doc(db, "group_info", "main"), {
+          name: newName,
+          description: newDesc,
+          avatarUrl: newUrl,
+          updatedBy: currentUser.handle,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        await addDoc(collection(db, "messages"), {
+          type: "system",
+          text: `@${currentUser.handle} updated the group profile settings.`,
+          timestamp: serverTimestamp()
+        });
+
+        editGroupModal.classList.add("hidden");
+        triggerToast("Group profile updated", "check");
+      } catch (e) {
+        triggerToast("Failed to update group", "alert-triangle", true);
+      }
+    });
+
+    // Pinning Mechanism (Admins & Owner only)
+    window.pinMessage = async function(messageId, snippet) {
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
+        triggerToast("Only admins can pin messages", "shield-alert", true);
+        return;
+      }
+      try {
+        await setDoc(doc(db, "group_info", "pinned"), {
+          messageId: messageId,
+          snippet: snippet || "Pinned Message",
+          pinnedBy: currentUser.handle,
+          timestamp: serverTimestamp()
+        });
+        triggerToast("Message pinned", "pin");
+      } catch (e) {
+        triggerToast("Could not pin message", "alert-circle", true);
+      }
+    };
+
+    unpinMessageBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
+        triggerToast("Only admins can unpin messages", "shield-alert", true);
+        return;
+      }
+      try {
+        await deleteDoc(doc(db, "group_info", "pinned"));
+        triggerToast("Message unpinned", "info");
+      } catch (e) {
+        triggerToast("Failed to unpin", "alert-circle", true);
+      }
+    });
+
+    function listenToPinnedMessage() {
+      onSnapshot(doc(db, "group_info", "pinned"), (snap) => {
+        if (snap.exists()) {
+          cachedPinnedDoc = snap.data();
+          pinnedBannerText.textContent = cachedPinnedDoc.snippet || "Attachment";
+          pinnedMessageBar.classList.remove("hidden");
+          if (currentUser.role === 'owner' || currentUser.role === 'admin') {
+            unpinMessageBtn.classList.remove("hidden");
+          } else {
+            unpinMessageBtn.classList.add("hidden");
+          }
+        } else {
+          cachedPinnedDoc = null;
+          pinnedMessageBar.classList.add("hidden");
+        }
+      });
+    }
+
+    pinnedBannerContent.addEventListener("click", () => {
+      if (cachedPinnedDoc && cachedPinnedDoc.messageId) {
+        window.jumpToMessage(cachedPinnedDoc.messageId);
+      }
+    });
+
+    // Message Deletion (Owner/Admin can delete ANY message; regular users can only delete their own)
+    window.deleteMessage = async function(messageId, messageUid, senderHandle) {
+      const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
+      const isMine = messageUid === currentUser.uid;
+
+      if (!isMine && !isOwnerOrAdmin) {
+        triggerToast("You cannot delete another member's message", "shield-alert", true);
+        return;
+      }
+
+      // Prevent anyone from deleting meoponly's messages unless it's meoponly himself
+      if (senderHandle && senderHandle.toLowerCase() === OWNER_HANDLE && currentUser.handle.toLowerCase() !== OWNER_HANDLE) {
+        triggerToast("Nobody can delete the Owner's messages!", "shield-alert", true);
+        return;
+      }
+
+      if (!confirm("Delete this message?")) return;
+
+      try {
+        await deleteDoc(doc(db, "messages", messageId));
+        triggerToast("Message deleted", "trash-2");
+      } catch (e) {
+        triggerToast("Failed to delete", "alert-circle", true);
+      }
+    };
+
+    // Chat Message Rendering
+    function sanitize(str) {
+      const temp = document.createElement("div");
+      temp.textContent = str;
+      return temp.innerHTML;
+    }
+
+    function formatMessageText(text) {
+      const clean = sanitize(text);
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      return clean.replace(urlRegex, (url) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-[#64b5f6] hover:underline">${url}</a>`;
+      });
+    }
+
+    function renderMessage(docSnap) {
+      const id = docSnap.id;
+      const data = docSnap.data();
+
+      if (data.type === "system") {
+        return `
+          <div id="msg-${id}" class="flex justify-center my-2">
+            <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-tg-dateBadge/90 border border-tg-border text-slate-300 shadow backdrop-blur select-none">
+              ${sanitize(data.text)}
+            </span>
+          </div>
+        `;
+      }
+
+      const isMe = data.uid === currentUser.uid;
+      const senderRole = resolveUserRole(data.handle, data.role);
+      const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
+      const canDelete = isMe || isOwnerOrAdmin;
+
+      const timeStr = data.timestamp?.toDate 
+        ? data.timestamp.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+        : "just now";
+
+      // Role tag styling inside chat bubble
+      let roleBadge = "";
+      if (senderRole === 'owner') {
+        roleBadge = `<span class="text-[9px] px-1 rounded font-bold uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">Owner</span>`;
+      } else if (senderRole === 'admin') {
+        roleBadge = `<span class="text-[9px] px-1 rounded font-bold uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">Admin</span>`;
+      }
+
+      // Reply Box
+      let replyMarkup = "";
+      if (data.replyTo) {
+        replyMarkup = `
+          <div onclick="window.jumpToMessage('${data.replyTo.id}')" class="mb-1.5 px-2 py-1 rounded bg-black/20 border-l-2 border-[#5288c1] text-xs cursor-pointer hover:bg-black/30 transition select-none">
+            <div class="font-bold text-[11px] text-[#5288c1] truncate leading-tight">@${sanitize(data.replyTo.handle)}</div>
+            <div class="text-[11px] text-slate-300 truncate">${sanitize(data.replyTo.text || "Attached document/photo")}</div>
+          </div>
+        `;
+      }
+
+      // Media Box
+      let mediaMarkup = "";
+      if (data.media) {
+        if (data.media.isImage) {
+          mediaMarkup = `
+            <div class="mb-1.5 rounded-xl overflow-hidden bg-black/30 max-h-72">
+              <a href="${data.media.url}" target="_blank">
+                <img src="${data.media.url}" alt="Attachment" class="w-full h-auto object-cover max-h-72 hover:opacity-95 transition" loading="lazy" />
+              </a>
+            </div>
+          `;
+        } else {
+          mediaMarkup = `
+            <a href="${data.media.url}" target="_blank" download="${data.media.name}" class="mb-1.5 p-2 rounded-xl bg-black/20 hover:bg-black/30 border border-white/5 flex items-center gap-2 transition">
+              <i data-lucide="file" class="w-5 h-5 text-tg-accent flex-shrink-0"></i>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-semibold text-white truncate">${sanitize(data.media.name)}</p>
+                <p class="text-[10px] text-tg-muted">${data.media.size || 'Document'}</p>
+              </div>
+              <i data-lucide="download" class="w-4 h-4 text-tg-muted flex-shrink-0"></i>
+            </a>
+          `;
+        }
+      }
+
+      // Reactions Tray
+      const reactions = data.reactions || {};
+      let reactionsMarkup = "";
+      for (const [emoji, uids] of Object.entries(reactions)) {
+        if (uids && uids.length > 0) {
+          const hasReacted = uids.includes(currentUser.uid);
+          reactionsMarkup += `
+            <button 
+              type="button" 
+              onclick="window.toggleReaction('${id}', '${emoji}')" 
+              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] transition ${hasReacted ? 'bg-[#5288c1]/30 border border-[#5288c1] text-white' : 'bg-black/20 border border-white/5 text-slate-300'}">
+              <span>${emoji}</span>
+              <span class="font-medium text-[10px]">${uids.length}</span>
+            </button>
+          `;
+        }
+      }
+
+      const escapedSnippet = (data.text || 'Photo/Attachment').replace(/'/g, "\\'");
+
+      return `
+        <div id="msg-${id}" class="group relative flex gap-2 max-w-[88%] sm:max-w-[70%] ${isMe ? 'ml-auto flex-row-reverse' : 'mr-auto flex-row'}">
+          
+          ${!isMe ? `
+            <div class="w-8 h-8 rounded-full bg-[#2b5278] border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0 mt-0.5 shadow">
+              <img src="${data.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + data.handle}" class="w-full h-full object-cover" />
+            </div>
+          ` : ''}
+
+          <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} min-w-0">
+            
+            <!-- Context Action Tray on Hover -->
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-3.5 ${isMe ? 'right-0' : 'left-8'} flex items-center gap-0.5 bg-tg-header border border-tg-border px-1.5 py-0.5 rounded-full shadow-lg z-10 text-slate-300">
+              <button onclick="window.setReplyTarget('${id}', '${data.handle}', '${escapedSnippet}')" class="p-1 hover:text-white" title="Reply">
+                <i data-lucide="reply" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="window.toggleReaction('${id}', '👍')" class="p-1 hover:text-white" title="Like">👍</button>
+              <button onclick="window.toggleReaction('${id}', '❤️')" class="p-1 hover:text-white" title="Heart">❤️</button>
+              <button onclick="window.toggleReaction('${id}', '🔥')" class="p-1 hover:text-white" title="Fire">🔥</button>
+
+              ${isOwnerOrAdmin ? `
+                <button onclick="window.pinMessage('${id}', '${escapedSnippet}')" class="p-1 hover:text-amber-400" title="Pin Message (Admin)">
+                  <i data-lucide="pin" class="w-3.5 h-3.5"></i>
+                </button>
+              ` : ''}
+
+              ${canDelete ? `
+                <button onclick="window.deleteMessage('${id}', '${data.uid}', '${data.handle}')" class="p-1 hover:text-red-400" title="Delete Message">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              ` : ''}
+            </div>
+
+            <!-- Message Bubble -->
+            <div class="message-bubble rounded-2xl px-3.5 py-1.5 ${isMe ? 'bg-tg-bubbleOut text-white rounded-tr-xs' : 'bg-tg-bubbleIn text-slate-100 rounded-tl-xs'}">
+              ${!isMe ? `
+                <div class="flex items-center gap-1.5 mb-1 select-none">
+                  <span class="text-xs font-bold text-sky-400">@${sanitize(data.handle)}</span>${roleBadge}
+                </div>
+              ` : ''}
+
+              ${replyMarkup}
+              ${mediaMarkup}
+              ${data.text ? `<p class="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap select-text">${formatMessageText(data.text)}</p>` : ''}
+
+              <div class="flex items-center justify-end gap-1 mt-0.5 select-none text-[10px] text-slate-400">
+                <span>${timeStr}</span>
+                ${isMe ? `<i data-lucide="check-check" class="w-3.5 h-3.5 text-sky-300"></i>` : ''}
+              </div>
+            </div>
+
+            ${reactionsMarkup ? `<div class="flex flex-wrap gap-1 mt-1">${reactionsMarkup}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function listenToChat() {
+      const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+      onSnapshot(q, (snapshot) => {
+        document.getElementById("chatLoadingIndicator")?.remove();
+        let buffer = "";
+        snapshot.forEach((snap) => {
+          buffer += renderMessage(snap);
+        });
+
+        chatMessages.innerHTML = buffer || `
+          <div class="flex flex-col items-center justify-center h-full text-tg-muted text-xs gap-1.5 py-12">
+            <i data-lucide="message-circle" class="w-8 h-8 opacity-40"></i>
+            <p>Welcome to Tallentex Vault.</p>
+            <p class="text-[11px]">Send a question to get started.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+    }
+
+    // Reaction Handler
+    window.toggleReaction = async function(msgId, emoji) {
+      try {
+        const mRef = doc(db, "messages", msgId);
+        const mSnap = await getDoc(mRef);
+        if (!mSnap.exists()) return;
+        const data = mSnap.data();
+        let reactions = data.reactions || {};
+        let users = reactions[emoji] || [];
+        if (users.includes(currentUser.uid)) {
+          users = users.filter(u => u !== currentUser.uid);
+        } else {
+          users.push(currentUser.uid);
+        }
+        reactions[emoji] = users;
+        await updateDoc(mRef, { reactions });
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    window.setReplyTarget = function(id, handle, snippet) {
+      activeReply = { id, handle, text: snippet };
+      replyUserText.textContent = `Reply to @${handle}`;
+      replySnippetText.textContent = snippet;
+      replyBar.classList.remove("hidden");
+      messageInput.focus();
+    };
+
+    cancelReplyBtn.addEventListener("click", () => {
+      activeReply = null;
+      replyBar.classList.add("hidden");
+    });
+
+    window.jumpToMessage = function(targetId) {
+      const el = document.getElementById(`msg-${targetId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('highlight-flash');
+        setTimeout(() => el.classList.remove('highlight-flash'), 1600);
+      } else {
+        triggerToast("Message not loaded in current view", "info");
+      }
+    };
+
+    // Auto-Ban Violation Check
+    async function executeAutoBan(flaggedTerm) {
+      try {
+        await setDoc(doc(db, "banned_users", currentUser.uid), {
+          uid: currentUser.uid,
+          handle: currentUser.handle,
+          ip: clientIp,
+          reason: `Auto-moderation trigger: ${flaggedTerm}`,
+          timestamp: serverTimestamp()
+        });
+
+        await addDoc(collection(db, "messages"), {
+          type: "system",
+          text: `@${currentUser.handle || 'User'} was auto-banned for abusive content.`,
+          timestamp: serverTimestamp()
+        });
+        lockScreenAsBanned();
+      } catch (e) {
+        lockScreenAsBanned();
+      }
+    }
+
+    function checkProfanity(str) {
+      if (!str) return null;
+      const lower = str.toLowerCase();
+      for (const word of PROFANITY_LIST) {
+        const regex = new RegExp(`\\b${word}\\b`, 'i');
+        if (regex.test(lower)) return word;
+      }
+      return null;
+    }
+
+    // Cooldown Engine
+    function startCooldown(sec = 3) {
+      isCooldown = true;
+      sendBtn.disabled = true;
+      cooldownRing.classList.remove("hidden");
+      cooldownRing.textContent = `${sec}s`;
+      let rem = sec;
+      const t = setInterval(() => {
+        rem--;
+        if (rem > 0) {
+          cooldownRing.textContent = `${rem}s`;
+        } else {
+          clearInterval(t);
+          isCooldown = false;
+          sendBtn.disabled = false;
+          cooldownRing.classList.add("hidden");
+        }
+      }, 1000);
+    }
+
+    // Send Message
+    async function sendMessage() {
+      if (!currentUser.handle) {
+        openProfileModal(false);
+        return;
+      }
+      if (isCooldown) {
+        triggerToast("Cooldown active (3s limit)", "clock", true);
+        return;
+      }
+
+      const text = messageInput.value.trim();
+      const hasAttachment = Boolean(pendingAttachment);
+      if (!text && !hasAttachment) return;
+
+      const badWord = checkProfanity(text);
+      if (badWord) {
+        executeAutoBan(badWord);
+        return;
+      }
+
+      startCooldown(3);
+      sendBtn.disabled = true;
+
+      try {
+        let mediaPayload = null;
+        if (hasAttachment) {
+          const f = pendingAttachment;
+          const sRef = ref(storage, `chat_media/${Date.now()}_${f.name}`);
+          await uploadBytes(sRef, f);
+          const downloadUrl = await getDownloadURL(sRef);
+          mediaPayload = {
+            url: downloadUrl,
+            name: f.name,
+            size: `${(f.size / 1024).toFixed(1)} KB`,
+            isImage: f.type.startsWith("image/")
+          };
+        }
+
+        const msgData = {
+          uid: currentUser.uid,
+          handle: currentUser.handle,
+          role: currentUser.role,
+          avatarUrl: currentUser.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser.handle}`,
+          text: text || "",
+          timestamp: serverTimestamp(),
+          reactions: {}
+        };
+
+        if (mediaPayload) msgData.media = mediaPayload;
+        if (activeReply) msgData.replyTo = activeReply;
+
+        await addDoc(collection(db, "messages"), msgData);
+
+        messageInput.value = "";
+        messageInput.style.height = "auto";
+        pendingAttachment = null;
+        fileInput.value = "";
+        activeReply = null;
+        attachmentBar.classList.add("hidden");
+        replyBar.classList.add("hidden");
+        emojiPicker.classList.add("hidden");
+      } catch (err) {
+        console.error(err);
+        triggerToast("Failed to dispatch message", "alert-circle", true);
+      } finally {
+        if (!isCooldown) sendBtn.disabled = false;
+      }
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    messageInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    messageInput.addEventListener("input", function() {
+      this.style.height = "auto";
+      this.style.height = Math.min(this.scrollHeight, 128) + "px";
+    });
+
+    // Attachments
+    attachmentBtn.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      if (f.size > 25 * 1024 * 1024) {
+        triggerToast("File limit is 25MB", "alert-circle", true);
+        return;
+      }
+      pendingAttachment = f;
+      attachmentNameText.textContent = f.name;
+      attachmentSizeText.textContent = `${(f.size / 1024).toFixed(1)} KB`;
+      attachmentBar.classList.remove("hidden");
+    });
+    cancelAttachmentBtn.addEventListener("click", () => {
+      pendingAttachment = null;
+      fileInput.value = "";
+      attachmentBar.classList.add("hidden");
+    });
+
+    // Emojis
+    emojiBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      emojiPicker.classList.toggle("hidden");
+    });
+    document.querySelectorAll(".emoji-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        messageInput.value += btn.textContent;
+        messageInput.focus();
+      });
+    });
+    document.addEventListener("click", (e) => {
+      if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+        emojiPicker.classList.add("hidden");
+      }
+    });
+
+    // Onboarding & Profile Modal
+    let selectedAvatar = null;
+    function openProfileModal(isEditing = false) {
+      profileModal.classList.remove("hidden");
+      cancelProfileModalBtn.classList.toggle("hidden", !isEditing);
+      modalHandleInput.value = currentUser.handle || "";
+      selectedAvatar = currentUser.avatarUrl || "https://api.dicebear.com/7.x/bottts/svg?seed=KotaStar";
+      modalAvatarPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover" />`;
+    }
+
+    openMyProfileBtn.addEventListener("click", () => openProfileModal(true));
+    cancelProfileModalBtn.addEventListener("click", () => profileModal.classList.add("hidden"));
+
+    document.querySelectorAll(".preset-btn").forEach(b => {
+      b.addEventListener("click", () => {
+        selectedAvatar = b.getAttribute("data-preset");
+        modalAvatarPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover" />`;
+      });
+    });
+
+    modalAvatarUploadBtn.addEventListener("click", () => modalAvatarFileInput.click());
+    modalAvatarFileInput.addEventListener("change", async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      modalAvatarUploadBtn.innerText = "Uploading...";
+      try {
+        const sRef = ref(storage, `avatars/${currentUser.uid}_${Date.now()}`);
+        await uploadBytes(sRef, f);
+        selectedAvatar = await getDownloadURL(sRef);
+        modalAvatarPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover" />`;
+        triggerToast("Avatar uploaded", "check");
+      } catch (err) {
+        triggerToast("Upload failed", "alert-circle", true);
+      } finally {
+        modalAvatarUploadBtn.innerHTML = `<i data-lucide="upload" class="w-4 h-4 text-tg-accent"></i><span>Upload Custom Photo</span>`;
+        lucide.createIcons();
+      }
+    });
+
+    saveProfileBtn.addEventListener("click", async () => {
+      const rawHandle = modalHandleInput.value.trim().toLowerCase().replace(/^@/, '');
+      if (!/^[a-zA-Z0-9_]{3,20}$/.test(rawHandle)) {
+        modalHandleStatus.textContent = "Handle must be 3-20 chars alphanumeric or underscore.";
+        modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
+        return;
+      }
+
+      saveProfileBtn.disabled = true;
+      saveProfileBtn.textContent = "Verifying...";
+
+      try {
+        const q = query(collection(db, "users"), where("handle_lowercase", "==", rawHandle), limit(1));
+        const snap = await getDocs(q);
+        if (!snap.empty && snap.docs[0].id !== currentUser.uid) {
+          modalHandleStatus.textContent = `@${rawHandle} is already registered by someone else!`;
+          modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
+          saveProfileBtn.disabled = false;
+          saveProfileBtn.textContent = "Confirm Handle";
+          return;
+        }
+
+        const oldHandle = currentUser.handle;
+        const newHandle = rawHandle;
+        const assignedRole = resolveUserRole(newHandle, currentUser.role);
+
+        await setDoc(doc(db, "users", currentUser.uid), {
+          handle: newHandle,
+          handle_lowercase: newHandle,
+          role: assignedRole,
+          avatarUrl: selectedAvatar,
+          clientIp: clientIp,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        currentUser.handle = newHandle;
+        currentUser.avatarUrl = selectedAvatar;
+        currentUser.role = assignedRole;
+        localStorage.setItem("ttx_handle", newHandle);
+        localStorage.setItem("ttx_avatar", selectedAvatar);
+
+        if (oldHandle && oldHandle !== newHandle) {
+          await addDoc(collection(db, "messages"), {
+            type: "system",
+            text: `@${oldHandle} changed handle to @${newHandle}`,
+            timestamp: serverTimestamp()
+          });
+        }
+
+        updateTopProfileUI();
+        profileModal.classList.add("hidden");
+        triggerToast(`Signed in as @${newHandle}`, "check");
+      } catch (err) {
+        triggerToast("Failed to save profile", "alert-circle", true);
+      } finally {
+        saveProfileBtn.disabled = false;
+        saveProfileBtn.textContent = "Confirm Handle";
+      }
+    });
+
+    // Drawer Toggles
+    openGroupInfoBtn.addEventListener("click", () => groupInfoDrawer.classList.remove("hidden"));
+    closeGroupInfoBtn.addEventListener("click", () => groupInfoDrawer.classList.add("hidden"));
+
+    // Init App
+    window.addEventListener("DOMContentLoaded", async () => {
+      lucide.createIcons();
+      const isBanned = await checkBanStatus();
+      if (isBanned) return;
+
+      updateTopProfileUI();
+      listenToGroupMetadata();
+      listenToMembers();
+      listenToPinnedMessage();
+      listenToChat();
+
+      if (!currentUser.handle) {
+        openProfileModal(false);
+      }
+    });
+  </script>
+</body>
+</html>
