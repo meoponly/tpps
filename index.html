@@ -16,7 +16,6 @@
               bg: '#0e1621',
               header: '#17212b',
               surface: '#17212b',
-              sidebar: '#0e1621',
               border: '#0b1118',
               accent: '#5288c1',
               accentHover: '#6499d3',
@@ -42,20 +41,13 @@
       overflow: hidden;
       background-color: #0e1621;
     }
-    
-    /* Authentic Telegram Desktop Dark Pattern SVG Wallpaper */
     .tg-chat-pattern {
       background-color: #0e1621;
       background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' opacity='0.035'%3E%3Cpath fill='%23ffffff' d='M60 15a45 45 0 1 0 45 45 45 45 0 0 0-45-45zm0 82a37 37 0 1 1 37-37 37 37 0 0 1-37 37zm-7-51h14v10H53zm0 18h14v18H53z'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='20' r='5'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='20' r='6'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='100' r='6'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='5'/%3E%3Cpath fill='%23ffffff' d='M25 50l6 8-8 6 8 6-6 8-6-8-8 6 6-8-6-8 8-6z'/%3E%3C/svg%3E");
       background-attachment: fixed;
     }
-
-    .custom-scroll::-webkit-scrollbar {
-      width: 4px;
-    }
-    .custom-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .custom-scroll::-webkit-scrollbar-thumb {
       background: rgba(112, 132, 153, 0.25);
       border-radius: 10px;
@@ -68,7 +60,7 @@
       word-break: break-word;
     }
     .highlight-flash {
-      animation: flash-highlight 1.6s ease-out;
+      animation: flash-highlight 1.5s ease-out;
     }
     @keyframes flash-highlight {
       0% { background-color: rgba(82, 136, 193, 0.45); }
@@ -78,9 +70,8 @@
 </head>
 <body class="h-full flex flex-col antialiased text-slate-100">
 
-  <!-- TOP HEADER -->
+  <!-- TOP BAR -->
   <header class="h-14 flex-shrink-0 bg-tg-header border-b border-tg-border px-4 flex items-center justify-between z-30 shadow-sm">
-    <!-- Clickable Header opens Group Info Sidebar -->
     <div id="openGroupInfoBtn" class="flex items-center gap-3 cursor-pointer hover:opacity-90 transition min-w-0">
       <div class="relative w-10 h-10 rounded-full overflow-hidden bg-[#2b5278] flex items-center justify-center font-bold text-white flex-shrink-0 shadow border border-slate-700">
         <img id="headerGroupAvatar" src="" alt="Grp" class="w-full h-full object-cover hidden" />
@@ -100,9 +91,8 @@
       </div>
     </div>
 
-    <!-- User Profile & Action Bar -->
     <div class="flex items-center gap-2">
-      <button id="openMyProfileBtn" class="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-tg-bg/70 hover:bg-tg-bg border border-tg-border text-xs text-slate-200 transition shadow-sm" title="Your Settings">
+      <button id="openMyProfileBtn" class="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-tg-bg/70 hover:bg-tg-bg border border-tg-border text-xs text-slate-200 transition shadow-sm">
         <img id="myHeaderAvatar" src="" class="w-6 h-6 rounded-full object-cover border border-slate-600 hidden" />
         <div id="myHeaderFallback" class="w-6 h-6 rounded-full bg-tg-accent text-white flex items-center justify-center font-bold text-[11px]">?</div>
         <span id="myHeaderHandle" class="font-medium max-w-[90px] truncate">@loading</span>
@@ -111,7 +101,7 @@
     </div>
   </header>
 
-  <!-- PINNED MESSAGE BANNER -->
+  <!-- PINNED BANNER -->
   <div id="pinnedMessageBar" class="hidden h-11 bg-tg-header/95 backdrop-blur border-b border-tg-border px-4 flex items-center justify-between text-xs z-20 cursor-pointer hover:bg-tg-header transition">
     <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5 flex-1" id="pinnedBannerContent">
       <i data-lucide="pin" class="w-3.5 h-3.5 text-tg-accent flex-shrink-0"></i>
@@ -120,29 +110,26 @@
         <p id="pinnedBannerText" class="text-slate-300 truncate leading-tight text-[11px] mt-0.5">...</p>
       </div>
     </div>
-    <button id="unpinMessageBtn" class="text-tg-muted hover:text-red-400 p-1 rounded transition hidden" title="Unpin message (Admin)">
+    <button id="unpinMessageBtn" class="text-tg-muted hover:text-red-400 p-1 rounded transition hidden" title="Unpin message">
       <i data-lucide="x" class="w-3.5 h-3.5"></i>
     </button>
   </div>
 
-  <!-- CHAT CONTAINER -->
+  <!-- CHAT WINDOW -->
   <main class="flex-1 flex flex-col min-h-0 relative tg-chat-pattern">
-    
-    <!-- Notification Toast -->
     <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 border border-slate-700 text-white text-xs px-4 py-2 rounded-xl shadow-2xl flex items-center gap-2 transform -translate-y-8 opacity-0 pointer-events-none transition-all duration-200">
       <i data-lucide="info" class="w-4 h-4 text-tg-accent" id="toastIcon"></i>
       <span id="toastMessage">Notification</span>
     </div>
 
-    <!-- Messages Container -->
     <div id="chatMessages" class="flex-1 overflow-y-auto px-3 sm:px-8 py-4 space-y-2.5 custom-scroll select-text">
       <div id="chatLoadingIndicator" class="flex flex-col items-center justify-center h-full text-tg-muted gap-2 text-xs select-none">
         <div class="w-6 h-6 border-2 border-tg-muted/30 border-t-tg-accent rounded-full animate-spin"></div>
-        <span>Syncing Telegram vault...</span>
+        <span>Syncing Realtime Database...</span>
       </div>
     </div>
 
-    <!-- Reply Drawer -->
+    <!-- Reply Banner -->
     <div id="replyBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
       <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5">
         <i data-lucide="reply" class="w-4 h-4 text-tg-accent flex-shrink-0"></i>
@@ -156,14 +143,14 @@
       </button>
     </div>
 
-    <!-- Media Preview Drawer -->
+    <!-- Image Attachment Banner -->
     <div id="attachmentBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
       <div class="flex items-center gap-2.5 min-w-0">
         <div id="attachmentPreviewWrapper" class="w-8 h-8 rounded bg-tg-border flex items-center justify-center overflow-hidden flex-shrink-0">
-          <i data-lucide="file" class="w-4 h-4 text-tg-muted"></i>
+          <i data-lucide="image" class="w-4 h-4 text-tg-muted"></i>
         </div>
         <div class="min-w-0">
-          <p id="attachmentNameText" class="font-medium text-slate-200 truncate">file.pdf</p>
+          <p id="attachmentNameText" class="font-medium text-slate-200 truncate">photo.png</p>
           <p id="attachmentSizeText" class="text-[10px] text-tg-muted">0 KB</p>
         </div>
       </div>
@@ -172,7 +159,7 @@
       </button>
     </div>
 
-    <!-- Emoji Drawer -->
+    <!-- Emoji Picker -->
     <div id="emojiPicker" class="hidden absolute bottom-16 left-4 bg-tg-header border border-tg-border rounded-2xl p-2 shadow-2xl z-40 grid grid-cols-7 gap-1 w-64 select-none">
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">👍</button>
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">❤️</button>
@@ -190,10 +177,10 @@
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🧠</button>
     </div>
 
-    <!-- BOTTOM INPUT BAR -->
+    <!-- Input Bar -->
     <div class="bg-tg-header border-t border-tg-border px-3 sm:px-4 py-2 flex items-end gap-2 relative z-20 select-none">
-      <input type="file" id="fileInput" class="hidden" />
-      <button id="attachmentBtn" type="button" class="p-2 text-tg-muted hover:text-tg-accent hover:bg-tg-bg rounded-full transition flex-shrink-0" title="Attach file">
+      <input type="file" id="fileInput" accept="image/*" class="hidden" />
+      <button id="attachmentBtn" type="button" class="p-2 text-tg-muted hover:text-tg-accent hover:bg-tg-bg rounded-full transition flex-shrink-0" title="Attach picture">
         <i data-lucide="paperclip" class="w-5 h-5"></i>
       </button>
 
@@ -219,14 +206,11 @@
         </div>
       </div>
     </div>
-
   </main>
 
-  <!-- GROUP INFO DRAWER (WhatsApp / Telegram Styled) -->
+  <!-- GROUP INFO DRAWER -->
   <div id="groupInfoDrawer" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end">
-    <div class="bg-tg-header w-full max-w-md h-full flex flex-col border-l border-tg-border shadow-2xl animate-in slide-in-from-right duration-200">
-      
-      <!-- Drawer Header -->
+    <div class="bg-tg-header w-full max-w-md h-full flex flex-col border-l border-tg-border shadow-2xl">
       <div class="h-14 px-4 border-b border-tg-border flex items-center justify-between flex-shrink-0 bg-tg-header">
         <div class="flex items-center gap-2">
           <button id="closeGroupInfoBtn" class="p-1.5 text-tg-muted hover:text-white rounded-lg transition">
@@ -234,23 +218,18 @@
           </button>
           <span class="font-bold text-sm text-white">Group Info</span>
         </div>
-        <!-- Owner Edit Button -->
         <button id="ownerEditGroupBtn" class="hidden text-xs font-semibold text-tg-accent hover:underline flex items-center gap-1">
           <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
           <span>Edit Group</span>
         </button>
       </div>
 
-      <!-- Drawer Body -->
       <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
-        
-        <!-- Group Avatar, Name, Description -->
         <div class="flex flex-col items-center text-center">
           <div class="relative w-24 h-24 rounded-full overflow-hidden bg-[#2b5278] flex items-center justify-center text-white text-3xl font-bold shadow-lg border-2 border-slate-700">
             <img id="drawerGroupAvatar" src="" class="w-full h-full object-cover hidden" />
             <span id="drawerGroupFallback">T</span>
           </div>
-
           <h2 id="drawerGroupName" class="text-lg font-bold text-white mt-3">Tallentex Discussion Grp 10th</h2>
           <p id="drawerGroupDesc" class="text-xs text-tg-muted mt-1 px-4 leading-relaxed">Allen Tallentex 2025/2026 Academic Study Group & Question Solving.</p>
           <span id="drawerGroupTotalBadge" class="mt-2 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-tg-bg text-tg-muted border border-tg-border">200 Members Capacity</span>
@@ -258,7 +237,6 @@
 
         <hr class="border-tg-border" />
 
-        <!-- Members Section (up to 200 members displayed) -->
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold uppercase tracking-wider text-tg-muted" id="drawerMembersCountTitle">Members (0)</span>
@@ -266,12 +244,8 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online
             </span>
           </div>
-
-          <div id="membersListContainer" class="space-y-2 max-h-96 overflow-y-auto custom-scroll pr-1">
-            <!-- Members Rendered Here -->
-          </div>
+          <div id="membersListContainer" class="space-y-2 max-h-96 overflow-y-auto custom-scroll pr-1"></div>
         </div>
-
       </div>
     </div>
   </div>
@@ -283,18 +257,15 @@
         <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
         <span>Owner Settings: Edit Group Profile</span>
       </h3>
-
       <div class="space-y-3.5 text-xs">
         <div>
           <label class="block text-tg-muted font-bold mb-1">Group Name</label>
           <input type="text" id="editGroupNameInput" class="w-full bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent" />
         </div>
-
         <div>
           <label class="block text-tg-muted font-bold mb-1">Group Description</label>
           <textarea id="editGroupDescInput" rows="2" class="w-full bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent"></textarea>
         </div>
-
         <div>
           <label class="block text-tg-muted font-bold mb-1">Group Icon URL or Upload</label>
           <div class="flex items-center gap-2">
@@ -305,7 +276,6 @@
             </button>
           </div>
         </div>
-
         <div class="flex items-center justify-end gap-2 pt-3 border-t border-tg-border">
           <button id="closeEditGroupModalBtn" class="px-4 py-2 rounded-xl text-tg-muted hover:text-white transition">Cancel</button>
           <button id="saveGroupDetailsBtn" class="px-4 py-2 rounded-xl bg-tg-accent hover:bg-tg-accentHover text-white font-bold transition">Save Changes</button>
@@ -314,7 +284,7 @@
     </div>
   </div>
 
-  <!-- ONBOARDING & MY PROFILE MODAL -->
+  <!-- PROFILE MODAL -->
   <div id="profileModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-tg-header border border-tg-border rounded-3xl w-full max-w-md p-6 shadow-2xl">
       <div class="text-center mb-5">
@@ -404,16 +374,12 @@
     </div>
   </div>
 
-  <!-- FIREBASE APP LOGIC -->
+  <!-- REALTIME DATABASE ONLY (Web SDK v10 Modular via WebSocket) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import { 
-      getFirestore, collection, addDoc, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc,
-      query, orderBy, onSnapshot, serverTimestamp, where, limit 
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-    import { 
-      getStorage, ref, uploadBytes, getDownloadURL 
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+      getDatabase, ref, set, get, push, update, remove, onValue, serverTimestamp, query, limitToLast, orderByChild
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDvyIQNVjXPnVnYQWIcPrr5lrEAKbGr54k",
@@ -426,8 +392,7 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+    const db = getDatabase(app);
 
     const OWNER_HANDLE = "meoponly";
 
@@ -441,12 +406,12 @@
       uid: localStorage.getItem("ttx_uid") || null,
       handle: localStorage.getItem("ttx_handle") || null,
       avatarUrl: localStorage.getItem("ttx_avatar") || null,
-      role: 'member' // 'owner' | 'admin' | 'member'
+      role: 'member'
     };
 
     let clientIp = "127.0.0.1";
     let activeReply = null;
-    let pendingAttachment = null;
+    let pendingAttachmentData = null;
     let isCooldown = false;
     let cachedPinnedDoc = null;
     let groupMetadata = {
@@ -455,7 +420,7 @@
       avatarUrl: ""
     };
 
-    // DOM Elements
+    // Elements
     const chatMessages = document.getElementById("chatMessages");
     const messageInput = document.getElementById("messageInput");
     const sendBtn = document.getElementById("sendBtn");
@@ -475,14 +440,12 @@
     const toast = document.getElementById("toast");
     const bannedScreen = document.getElementById("bannedScreen");
 
-    // Header & Profile DOM
     const openMyProfileBtn = document.getElementById("openMyProfileBtn");
     const myHeaderAvatar = document.getElementById("myHeaderAvatar");
     const myHeaderFallback = document.getElementById("myHeaderFallback");
     const myHeaderHandle = document.getElementById("myHeaderHandle");
     const myRoleTagBadge = document.getElementById("myRoleTagBadge");
     
-    // Group Info Drawer DOM
     const openGroupInfoBtn = document.getElementById("openGroupInfoBtn");
     const groupInfoDrawer = document.getElementById("groupInfoDrawer");
     const closeGroupInfoBtn = document.getElementById("closeGroupInfoBtn");
@@ -500,7 +463,6 @@
     const membersListContainer = document.getElementById("membersListContainer");
     const ownerEditGroupBtn = document.getElementById("ownerEditGroupBtn");
 
-    // Owner Edit Modal DOM
     const editGroupModal = document.getElementById("editGroupModal");
     const closeEditGroupModalBtn = document.getElementById("closeEditGroupModalBtn");
     const saveGroupDetailsBtn = document.getElementById("saveGroupDetailsBtn");
@@ -510,13 +472,11 @@
     const groupIconFileInput = document.getElementById("groupIconFileInput");
     const triggerUploadGroupIconBtn = document.getElementById("triggerUploadGroupIconBtn");
 
-    // Pinned Message DOM
     const pinnedMessageBar = document.getElementById("pinnedMessageBar");
     const pinnedBannerContent = document.getElementById("pinnedBannerContent");
     const pinnedBannerText = document.getElementById("pinnedBannerText");
     const unpinMessageBtn = document.getElementById("unpinMessageBtn");
 
-    // Modal Handle & Profile DOM
     const profileModal = document.getElementById("profileModal");
     const modalHandleInput = document.getElementById("modalHandleInput");
     const modalHandleStatus = document.getElementById("modalHandleStatus");
@@ -554,15 +514,8 @@
       }
 
       try {
-        const banUidSnap = await getDoc(doc(db, "banned_users", currentUser.uid));
-        if (banUidSnap.exists()) {
-          lockScreenAsBanned();
-          return true;
-        }
-
-        const q = query(collection(db, "banned_users"), where("ip", "==", clientIp), limit(1));
-        const ipSnap = await getDocs(q);
-        if (!ipSnap.empty) {
+        const banSnap = await get(ref(db, `tallentex_banned/${currentUser.uid}`));
+        if (banSnap.exists()) {
           lockScreenAsBanned();
           return true;
         }
@@ -578,14 +531,9 @@
       if (profileModal) profileModal.classList.add("hidden");
     }
 
-    // Determine Role: meoponly is always owner; other admins stored in DB
-    function resolveUserRole(handle, dbRole) {
-      if (handle && handle.toLowerCase() === OWNER_HANDLE) {
-        return 'owner';
-      }
-      if (dbRole === 'admin' || dbRole === 'owner') {
-        return dbRole;
-      }
+    function resolveUserRole(handle, currentRole) {
+      if (handle && handle.toLowerCase() === OWNER_HANDLE) return 'owner';
+      if (currentRole === 'admin' || currentRole === 'owner') return currentRole;
       return 'member';
     }
 
@@ -609,7 +557,6 @@
         myHeaderFallback.classList.remove("hidden");
       }
 
-      // Role tag
       if (currentUser.role === 'owner') {
         myRoleTagBadge.textContent = "OWNER";
         myRoleTagBadge.className = "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30";
@@ -626,15 +573,14 @@
       }
     }
 
-    // Sync Group Metadata (Title, Description, Icon) Real-time
+    // Sync Group Metadata Real-time
     function listenToGroupMetadata() {
-      const groupDocRef = doc(db, "group_info", "main");
-      onSnapshot(groupDocRef, (snap) => {
+      const gRef = ref(db, "tallentex_group_info/main");
+      onValue(gRef, (snap) => {
         if (snap.exists()) {
-          groupMetadata = { ...groupMetadata, ...snap.data() };
+          groupMetadata = { ...groupMetadata, ...snap.val() };
         } else {
-          // Initialize default group info
-          setDoc(groupDocRef, groupMetadata);
+          set(gRef, groupMetadata);
         }
 
         headerGroupTitle.textContent = groupMetadata.name;
@@ -661,26 +607,27 @@
       });
     }
 
-    // Sync Members Real-Time (Up to 200 members list with tags & admin actions)
+    // Sync Members Real-time
     let allMembersCache = [];
     function listenToMembers() {
-      const q = query(collection(db, "users"), limit(200));
-      onSnapshot(q, (snapshot) => {
+      const usersRef = ref(db, "tallentex_users");
+      onValue(usersRef, (snap) => {
         allMembersCache = [];
-        snapshot.forEach((d) => {
-          const u = d.data();
-          u.uid = d.id;
-          u.role = resolveUserRole(u.handle, u.role);
-          allMembersCache.push(u);
-        });
+        if (snap.exists()) {
+          const val = snap.val();
+          Object.keys(val).forEach(k => {
+            const u = val[k];
+            u.uid = k;
+            u.role = resolveUserRole(u.handle, u.role);
+            allMembersCache.push(u);
+          });
+        }
 
-        // Update counts
-        const totalCount = allMembersCache.length;
-        headerMemberCounter.textContent = `${totalCount} member${totalCount === 1 ? '' : 's'}`;
-        headerOnlineCounter.textContent = `${Math.max(1, Math.min(totalCount, Math.ceil(totalCount * 0.75)))} online`;
-        drawerMembersCountTitle.textContent = `Members (${totalCount} / 200)`;
+        const count = allMembersCache.length;
+        headerMemberCounter.textContent = `${count} member${count === 1 ? '' : 's'}`;
+        headerOnlineCounter.textContent = `${Math.max(1, Math.min(count, Math.ceil(count * 0.75)))} online`;
+        drawerMembersCountTitle.textContent = `Members (${count} / 200)`;
 
-        // Refresh user role in local cache if updated remotely
         const me = allMembersCache.find(m => m.uid === currentUser.uid);
         if (me) {
           currentUser.role = me.role;
@@ -705,9 +652,6 @@
           badgeHtml = `<span class="text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30">Admin</span>`;
         }
 
-        // Action Menu for owner/admin:
-        // - No one can delete or demote meoponly (owner).
-        // - Admin/Owner can promote normal members to admin.
         let actionBtn = "";
         if (isMePrivileged && !isMemberOwner && member.uid !== currentUser.uid) {
           if (!isMemberAdmin) {
@@ -745,15 +689,14 @@
       }).join('');
     }
 
-    // Role Actions: Promote & Demote
     window.promoteToAdmin = async function(targetUid, targetHandle) {
       if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
         triggerToast("Only admins can promote users", "alert-triangle", true);
         return;
       }
       try {
-        await updateDoc(doc(db, "users", targetUid), { role: "admin" });
-        await addDoc(collection(db, "messages"), {
+        await update(ref(db, `tallentex_users/${targetUid}`), { role: "admin" });
+        push(ref(db, "tallentex_chat"), {
           type: "system",
           text: `@${currentUser.handle} promoted @${targetHandle} to Admin.`,
           timestamp: serverTimestamp()
@@ -774,8 +717,8 @@
         return;
       }
       try {
-        await updateDoc(doc(db, "users", targetUid), { role: "member" });
-        await addDoc(collection(db, "messages"), {
+        await update(ref(db, `tallentex_users/${targetUid}`), { role: "member" });
+        push(ref(db, "tallentex_chat"), {
           type: "system",
           text: `@${currentUser.handle} demoted @${targetHandle} to Member.`,
           timestamp: serverTimestamp()
@@ -786,31 +729,25 @@
       }
     };
 
-    // Owner Edit Group Logic
+    // Owner Edit Group
     ownerEditGroupBtn.addEventListener("click", () => {
       editGroupNameInput.value = groupMetadata.name;
       editGroupDescInput.value = groupMetadata.description;
       editGroupAvatarUrlInput.value = groupMetadata.avatarUrl || "";
       editGroupModal.classList.remove("hidden");
     });
-
     closeEditGroupModalBtn.addEventListener("click", () => editGroupModal.classList.add("hidden"));
 
     triggerUploadGroupIconBtn.addEventListener("click", () => groupIconFileInput.click());
-
-    groupIconFileInput.addEventListener("change", async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      triggerToast("Uploading icon...", "upload");
-      try {
-        const storageRef = ref(storage, `group_icons/group_${Date.now()}`);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
-        editGroupAvatarUrlInput.value = url;
-        triggerToast("Icon uploaded!", "check");
-      } catch (err) {
-        triggerToast("Failed to upload icon", "alert-triangle", true);
-      }
+    groupIconFileInput.addEventListener("change", (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = (re) => {
+        editGroupAvatarUrlInput.value = re.target.result;
+        triggerToast("Icon loaded!", "check");
+      };
+      reader.readAsDataURL(f);
     });
 
     saveGroupDetailsBtn.addEventListener("click", async () => {
@@ -824,15 +761,15 @@
       }
 
       try {
-        await setDoc(doc(db, "group_info", "main"), {
+        await update(ref(db, "tallentex_group_info/main"), {
           name: newName,
           description: newDesc,
           avatarUrl: newUrl,
           updatedBy: currentUser.handle,
           updatedAt: serverTimestamp()
-        }, { merge: true });
+        });
 
-        await addDoc(collection(db, "messages"), {
+        push(ref(db, "tallentex_chat"), {
           type: "system",
           text: `@${currentUser.handle} updated the group profile settings.`,
           timestamp: serverTimestamp()
@@ -845,14 +782,14 @@
       }
     });
 
-    // Pinning Mechanism (Admins & Owner only)
+    // Pinning Mechanism
     window.pinMessage = async function(messageId, snippet) {
       if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
         triggerToast("Only admins can pin messages", "shield-alert", true);
         return;
       }
       try {
-        await setDoc(doc(db, "group_info", "pinned"), {
+        await set(ref(db, "tallentex_group_info/pinned"), {
           messageId: messageId,
           snippet: snippet || "Pinned Message",
           pinnedBy: currentUser.handle,
@@ -871,7 +808,7 @@
         return;
       }
       try {
-        await deleteDoc(doc(db, "group_info", "pinned"));
+        await remove(ref(db, "tallentex_group_info/pinned"));
         triggerToast("Message unpinned", "info");
       } catch (e) {
         triggerToast("Failed to unpin", "alert-circle", true);
@@ -879,9 +816,9 @@
     });
 
     function listenToPinnedMessage() {
-      onSnapshot(doc(db, "group_info", "pinned"), (snap) => {
+      onValue(ref(db, "tallentex_group_info/pinned"), (snap) => {
         if (snap.exists()) {
-          cachedPinnedDoc = snap.data();
+          cachedPinnedDoc = snap.val();
           pinnedBannerText.textContent = cachedPinnedDoc.snippet || "Attachment";
           pinnedMessageBar.classList.remove("hidden");
           if (currentUser.role === 'owner' || currentUser.role === 'admin') {
@@ -902,7 +839,7 @@
       }
     });
 
-    // Message Deletion (Owner/Admin can delete ANY message; regular users can only delete their own)
+    // Message Deletion
     window.deleteMessage = async function(messageId, messageUid, senderHandle) {
       const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
       const isMine = messageUid === currentUser.uid;
@@ -912,7 +849,6 @@
         return;
       }
 
-      // Prevent anyone from deleting meoponly's messages unless it's meoponly himself
       if (senderHandle && senderHandle.toLowerCase() === OWNER_HANDLE && currentUser.handle.toLowerCase() !== OWNER_HANDLE) {
         triggerToast("Nobody can delete the Owner's messages!", "shield-alert", true);
         return;
@@ -921,14 +857,13 @@
       if (!confirm("Delete this message?")) return;
 
       try {
-        await deleteDoc(doc(db, "messages", messageId));
+        await remove(ref(db, `tallentex_chat/${messageId}`));
         triggerToast("Message deleted", "trash-2");
       } catch (e) {
         triggerToast("Failed to delete", "alert-circle", true);
       }
     };
 
-    // Chat Message Rendering
     function sanitize(str) {
       const temp = document.createElement("div");
       temp.textContent = str;
@@ -943,14 +878,11 @@
       });
     }
 
-    function renderMessage(docSnap) {
-      const id = docSnap.id;
-      const data = docSnap.data();
-
+    function renderMessage(id, data) {
       if (data.type === "system") {
         return `
           <div id="msg-${id}" class="flex justify-center my-2">
-            <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-tg-dateBadge/90 border border-tg-border text-slate-300 shadow backdrop-blur select-none">
+            <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-tg-dateBadge/90 border border-tg-border text-slate-300 shadow select-none">
               ${sanitize(data.text)}
             </span>
           </div>
@@ -962,11 +894,9 @@
       const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
       const canDelete = isMe || isOwnerOrAdmin;
 
-      const timeStr = data.timestamp?.toDate 
-        ? data.timestamp.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-        : "just now";
+      const dateObj = data.timestamp ? new Date(data.timestamp) : new Date();
+      const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      // Role tag styling inside chat bubble
       let roleBadge = "";
       if (senderRole === 'owner') {
         roleBadge = `<span class="text-[9px] px-1 rounded font-bold uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">Owner</span>`;
@@ -974,65 +904,51 @@
         roleBadge = `<span class="text-[9px] px-1 rounded font-bold uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">Admin</span>`;
       }
 
-      // Reply Box
       let replyMarkup = "";
       if (data.replyTo) {
         replyMarkup = `
           <div onclick="window.jumpToMessage('${data.replyTo.id}')" class="mb-1.5 px-2 py-1 rounded bg-black/20 border-l-2 border-[#5288c1] text-xs cursor-pointer hover:bg-black/30 transition select-none">
             <div class="font-bold text-[11px] text-[#5288c1] truncate leading-tight">@${sanitize(data.replyTo.handle)}</div>
-            <div class="text-[11px] text-slate-300 truncate">${sanitize(data.replyTo.text || "Attached document/photo")}</div>
+            <div class="text-[11px] text-slate-300 truncate">${sanitize(data.replyTo.text || "Photo")}</div>
           </div>
         `;
       }
 
-      // Media Box
       let mediaMarkup = "";
       if (data.media) {
-        if (data.media.isImage) {
-          mediaMarkup = `
-            <div class="mb-1.5 rounded-xl overflow-hidden bg-black/30 max-h-72">
-              <a href="${data.media.url}" target="_blank">
-                <img src="${data.media.url}" alt="Attachment" class="w-full h-auto object-cover max-h-72 hover:opacity-95 transition" loading="lazy" />
-              </a>
-            </div>
-          `;
-        } else {
-          mediaMarkup = `
-            <a href="${data.media.url}" target="_blank" download="${data.media.name}" class="mb-1.5 p-2 rounded-xl bg-black/20 hover:bg-black/30 border border-white/5 flex items-center gap-2 transition">
-              <i data-lucide="file" class="w-5 h-5 text-tg-accent flex-shrink-0"></i>
-              <div class="min-w-0 flex-1">
-                <p class="text-xs font-semibold text-white truncate">${sanitize(data.media.name)}</p>
-                <p class="text-[10px] text-tg-muted">${data.media.size || 'Document'}</p>
-              </div>
-              <i data-lucide="download" class="w-4 h-4 text-tg-muted flex-shrink-0"></i>
+        mediaMarkup = `
+          <div class="mb-1.5 rounded-xl overflow-hidden bg-black/30 max-h-72">
+            <a href="${data.media.url}" target="_blank">
+              <img src="${data.media.url}" alt="Attachment" class="w-full h-auto object-cover max-h-72 hover:opacity-95 transition" loading="lazy" />
             </a>
-          `;
-        }
+          </div>
+        `;
       }
 
-      // Reactions Tray
       const reactions = data.reactions || {};
       let reactionsMarkup = "";
-      for (const [emoji, uids] of Object.entries(reactions)) {
-        if (uids && uids.length > 0) {
-          const hasReacted = uids.includes(currentUser.uid);
-          reactionsMarkup += `
-            <button 
-              type="button" 
-              onclick="window.toggleReaction('${id}', '${emoji}')" 
-              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] transition ${hasReacted ? 'bg-[#5288c1]/30 border border-[#5288c1] text-white' : 'bg-black/20 border border-white/5 text-slate-300'}">
-              <span>${emoji}</span>
-              <span class="font-medium text-[10px]">${uids.length}</span>
-            </button>
-          `;
+      for (const [emoji, usersObj] of Object.entries(reactions)) {
+        if (usersObj) {
+          const uids = Object.keys(usersObj);
+          if (uids.length > 0) {
+            const hasReacted = uids.includes(currentUser.uid);
+            reactionsMarkup += `
+              <button 
+                type="button" 
+                onclick="window.toggleReaction('${id}', '${emoji}')" 
+                class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] transition ${hasReacted ? 'bg-[#5288c1]/30 border border-[#5288c1] text-white' : 'bg-black/20 border border-white/5 text-slate-300'}">
+                <span>${emoji}</span>
+                <span class="font-medium text-[10px]">${uids.length}</span>
+              </button>
+            `;
+          }
         }
       }
 
-      const escapedSnippet = (data.text || 'Photo/Attachment').replace(/'/g, "\\'");
+      const escapedSnippet = (data.text || 'Photo').replace(/'/g, "\\'");
 
       return `
         <div id="msg-${id}" class="group relative flex gap-2 max-w-[88%] sm:max-w-[70%] ${isMe ? 'ml-auto flex-row-reverse' : 'mr-auto flex-row'}">
-          
           ${!isMe ? `
             <div class="w-8 h-8 rounded-full bg-[#2b5278] border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0 mt-0.5 shadow">
               <img src="${data.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + data.handle}" class="w-full h-full object-cover" />
@@ -1040,8 +956,6 @@
           ` : ''}
 
           <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} min-w-0">
-            
-            <!-- Context Action Tray on Hover -->
             <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-3.5 ${isMe ? 'right-0' : 'left-8'} flex items-center gap-0.5 bg-tg-header border border-tg-border px-1.5 py-0.5 rounded-full shadow-lg z-10 text-slate-300">
               <button onclick="window.setReplyTarget('${id}', '${data.handle}', '${escapedSnippet}')" class="p-1 hover:text-white" title="Reply">
                 <i data-lucide="reply" class="w-3.5 h-3.5"></i>
@@ -1051,7 +965,7 @@
               <button onclick="window.toggleReaction('${id}', '🔥')" class="p-1 hover:text-white" title="Fire">🔥</button>
 
               ${isOwnerOrAdmin ? `
-                <button onclick="window.pinMessage('${id}', '${escapedSnippet}')" class="p-1 hover:text-amber-400" title="Pin Message (Admin)">
+                <button onclick="window.pinMessage('${id}', '${escapedSnippet}')" class="p-1 hover:text-amber-400" title="Pin Message">
                   <i data-lucide="pin" class="w-3.5 h-3.5"></i>
                 </button>
               ` : ''}
@@ -1063,7 +977,6 @@
               ` : ''}
             </div>
 
-            <!-- Message Bubble -->
             <div class="message-bubble rounded-2xl px-3.5 py-1.5 ${isMe ? 'bg-tg-bubbleOut text-white rounded-tr-xs' : 'bg-tg-bubbleIn text-slate-100 rounded-tl-xs'}">
               ${!isMe ? `
                 <div class="flex items-center gap-1.5 mb-1 select-none">
@@ -1088,13 +1001,16 @@
     }
 
     function listenToChat() {
-      const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
-      onSnapshot(q, (snapshot) => {
+      const chatQuery = query(ref(db, "tallentex_chat"), limitToLast(120));
+      onValue(chatQuery, (snapshot) => {
         document.getElementById("chatLoadingIndicator")?.remove();
         let buffer = "";
-        snapshot.forEach((snap) => {
-          buffer += renderMessage(snap);
-        });
+        if (snapshot.exists()) {
+          const val = snapshot.val();
+          Object.keys(val).forEach(id => {
+            buffer += renderMessage(id, val[id]);
+          });
+        }
 
         chatMessages.innerHTML = buffer || `
           <div class="flex flex-col items-center justify-center h-full text-tg-muted text-xs gap-1.5 py-12">
@@ -1108,22 +1024,15 @@
       });
     }
 
-    // Reaction Handler
     window.toggleReaction = async function(msgId, emoji) {
       try {
-        const mRef = doc(db, "messages", msgId);
-        const mSnap = await getDoc(mRef);
-        if (!mSnap.exists()) return;
-        const data = mSnap.data();
-        let reactions = data.reactions || {};
-        let users = reactions[emoji] || [];
-        if (users.includes(currentUser.uid)) {
-          users = users.filter(u => u !== currentUser.uid);
+        const reactionRef = ref(db, `tallentex_chat/${msgId}/reactions/${emoji}/${currentUser.uid}`);
+        const snap = await get(reactionRef);
+        if (snap.exists()) {
+          await remove(reactionRef);
         } else {
-          users.push(currentUser.uid);
+          await set(reactionRef, true);
         }
-        reactions[emoji] = users;
-        await updateDoc(mRef, { reactions });
       } catch (e) {
         console.error(e);
       }
@@ -1147,24 +1056,23 @@
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         el.classList.add('highlight-flash');
-        setTimeout(() => el.classList.remove('highlight-flash'), 1600);
+        setTimeout(() => el.classList.remove('highlight-flash'), 1500);
       } else {
-        triggerToast("Message not loaded in current view", "info");
+        triggerToast("Message not found in recent history", "info");
       }
     };
 
-    // Auto-Ban Violation Check
     async function executeAutoBan(flaggedTerm) {
       try {
-        await setDoc(doc(db, "banned_users", currentUser.uid), {
+        await set(ref(db, `tallentex_banned/${currentUser.uid}`), {
           uid: currentUser.uid,
           handle: currentUser.handle,
           ip: clientIp,
-          reason: `Auto-moderation trigger: ${flaggedTerm}`,
+          reason: `Auto-moderation: ${flaggedTerm}`,
           timestamp: serverTimestamp()
         });
 
-        await addDoc(collection(db, "messages"), {
+        push(ref(db, "tallentex_chat"), {
           type: "system",
           text: `@${currentUser.handle || 'User'} was auto-banned for abusive content.`,
           timestamp: serverTimestamp()
@@ -1185,7 +1093,6 @@
       return null;
     }
 
-    // Cooldown Engine
     function startCooldown(sec = 3) {
       isCooldown = true;
       sendBtn.disabled = true;
@@ -1205,7 +1112,6 @@
       }, 1000);
     }
 
-    // Send Message
     async function sendMessage() {
       if (!currentUser.handle) {
         openProfileModal(false);
@@ -1217,7 +1123,7 @@
       }
 
       const text = messageInput.value.trim();
-      const hasAttachment = Boolean(pendingAttachment);
+      const hasAttachment = Boolean(pendingAttachmentData);
       if (!text && !hasAttachment) return;
 
       const badWord = checkProfanity(text);
@@ -1230,38 +1136,30 @@
       sendBtn.disabled = true;
 
       try {
-        let mediaPayload = null;
-        if (hasAttachment) {
-          const f = pendingAttachment;
-          const sRef = ref(storage, `chat_media/${Date.now()}_${f.name}`);
-          await uploadBytes(sRef, f);
-          const downloadUrl = await getDownloadURL(sRef);
-          mediaPayload = {
-            url: downloadUrl,
-            name: f.name,
-            size: `${(f.size / 1024).toFixed(1)} KB`,
-            isImage: f.type.startsWith("image/")
-          };
-        }
-
         const msgData = {
           uid: currentUser.uid,
           handle: currentUser.handle,
           role: currentUser.role,
           avatarUrl: currentUser.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser.handle}`,
           text: text || "",
-          timestamp: serverTimestamp(),
-          reactions: {}
+          timestamp: Date.now()
         };
 
-        if (mediaPayload) msgData.media = mediaPayload;
+        if (hasAttachment) {
+          msgData.media = {
+            url: pendingAttachmentData.url,
+            name: pendingAttachmentData.name,
+            size: pendingAttachmentData.size
+          };
+        }
+
         if (activeReply) msgData.replyTo = activeReply;
 
-        await addDoc(collection(db, "messages"), msgData);
+        await push(ref(db, "tallentex_chat"), msgData);
 
         messageInput.value = "";
         messageInput.style.height = "auto";
-        pendingAttachment = null;
+        pendingAttachmentData = null;
         fileInput.value = "";
         activeReply = null;
         attachmentBar.classList.add("hidden");
@@ -1288,27 +1186,34 @@
       this.style.height = Math.min(this.scrollHeight, 128) + "px";
     });
 
-    // Attachments
     attachmentBtn.addEventListener("click", () => fileInput.click());
     fileInput.addEventListener("change", (e) => {
       const f = e.target.files[0];
       if (!f) return;
-      if (f.size > 25 * 1024 * 1024) {
-        triggerToast("File limit is 25MB", "alert-circle", true);
+      if (f.size > 1.5 * 1024 * 1024) {
+        triggerToast("Image limit is 1.5MB for fast real-time sync", "alert-circle", true);
         return;
       }
-      pendingAttachment = f;
-      attachmentNameText.textContent = f.name;
-      attachmentSizeText.textContent = `${(f.size / 1024).toFixed(1)} KB`;
-      attachmentBar.classList.remove("hidden");
+      const reader = new FileReader();
+      reader.onload = (re) => {
+        pendingAttachmentData = {
+          url: re.target.result,
+          name: f.name,
+          size: `${(f.size / 1024).toFixed(1)} KB`
+        };
+        attachmentNameText.textContent = f.name;
+        attachmentSizeText.textContent = pendingAttachmentData.size;
+        attachmentBar.classList.remove("hidden");
+      };
+      reader.readAsDataURL(f);
     });
+
     cancelAttachmentBtn.addEventListener("click", () => {
-      pendingAttachment = null;
+      pendingAttachmentData = null;
       fileInput.value = "";
       attachmentBar.classList.add("hidden");
     });
 
-    // Emojis
     emojiBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       emojiPicker.classList.toggle("hidden");
@@ -1325,7 +1230,7 @@
       }
     });
 
-    // Onboarding & Profile Modal
+    // Profile Modal
     let selectedAvatar = null;
     function openProfileModal(isEditing = false) {
       profileModal.classList.remove("hidden");
@@ -1346,22 +1251,16 @@
     });
 
     modalAvatarUploadBtn.addEventListener("click", () => modalAvatarFileInput.click());
-    modalAvatarFileInput.addEventListener("change", async (e) => {
+    modalAvatarFileInput.addEventListener("change", (e) => {
       const f = e.target.files[0];
       if (!f) return;
-      modalAvatarUploadBtn.innerText = "Uploading...";
-      try {
-        const sRef = ref(storage, `avatars/${currentUser.uid}_${Date.now()}`);
-        await uploadBytes(sRef, f);
-        selectedAvatar = await getDownloadURL(sRef);
+      const reader = new FileReader();
+      reader.onload = (re) => {
+        selectedAvatar = re.target.result;
         modalAvatarPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover" />`;
-        triggerToast("Avatar uploaded", "check");
-      } catch (err) {
-        triggerToast("Upload failed", "alert-circle", true);
-      } finally {
-        modalAvatarUploadBtn.innerHTML = `<i data-lucide="upload" class="w-4 h-4 text-tg-accent"></i><span>Upload Custom Photo</span>`;
-        lucide.createIcons();
-      }
+        triggerToast("Avatar loaded", "check");
+      };
+      reader.readAsDataURL(f);
     });
 
     saveProfileBtn.addEventListener("click", async () => {
@@ -1376,28 +1275,32 @@
       saveProfileBtn.textContent = "Verifying...";
 
       try {
-        const q = query(collection(db, "users"), where("handle_lowercase", "==", rawHandle), limit(1));
-        const snap = await getDocs(q);
-        if (!snap.empty && snap.docs[0].id !== currentUser.uid) {
-          modalHandleStatus.textContent = `@${rawHandle} is already registered by someone else!`;
-          modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
-          saveProfileBtn.disabled = false;
-          saveProfileBtn.textContent = "Confirm Handle";
-          return;
+        const usersSnap = await get(ref(db, "tallentex_users"));
+        if (usersSnap.exists()) {
+          const val = usersSnap.val();
+          for (const uid of Object.keys(val)) {
+            if (val[uid].handle_lowercase === rawHandle && uid !== currentUser.uid) {
+              modalHandleStatus.textContent = `@${rawHandle} is already registered!`;
+              modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
+              saveProfileBtn.disabled = false;
+              saveProfileBtn.textContent = "Confirm Handle";
+              return;
+            }
+          }
         }
 
         const oldHandle = currentUser.handle;
         const newHandle = rawHandle;
         const assignedRole = resolveUserRole(newHandle, currentUser.role);
 
-        await setDoc(doc(db, "users", currentUser.uid), {
+        await set(ref(db, `tallentex_users/${currentUser.uid}`), {
           handle: newHandle,
           handle_lowercase: newHandle,
           role: assignedRole,
           avatarUrl: selectedAvatar,
           clientIp: clientIp,
           updatedAt: serverTimestamp()
-        }, { merge: true });
+        });
 
         currentUser.handle = newHandle;
         currentUser.avatarUrl = selectedAvatar;
@@ -1406,7 +1309,7 @@
         localStorage.setItem("ttx_avatar", selectedAvatar);
 
         if (oldHandle && oldHandle !== newHandle) {
-          await addDoc(collection(db, "messages"), {
+          push(ref(db, "tallentex_chat"), {
             type: "system",
             text: `@${oldHandle} changed handle to @${newHandle}`,
             timestamp: serverTimestamp()
@@ -1417,18 +1320,18 @@
         profileModal.classList.add("hidden");
         triggerToast(`Signed in as @${newHandle}`, "check");
       } catch (err) {
-        triggerToast("Failed to save profile", "alert-circle", true);
+        console.error(err);
+        modalHandleStatus.textContent = "Connection error. Please try again.";
+        modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
       } finally {
         saveProfileBtn.disabled = false;
         saveProfileBtn.textContent = "Confirm Handle";
       }
     });
 
-    // Drawer Toggles
     openGroupInfoBtn.addEventListener("click", () => groupInfoDrawer.classList.remove("hidden"));
     closeGroupInfoBtn.addEventListener("click", () => groupInfoDrawer.classList.add("hidden"));
 
-    // Init App
     window.addEventListener("DOMContentLoaded", async () => {
       lucide.createIcons();
       const isBanned = await checkBanStatus();
