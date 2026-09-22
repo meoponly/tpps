@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#0e1621] text-slate-100 select-none">
+<html lang="en" class="h-full bg-[#0e1621] text-[#f5f5f5] select-none">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Tallentex Discussion Grp 10th</title>
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23229ED9'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z'/%3E%3C/svg%3E">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,14 +16,17 @@
             tg: {
               bg: '#0e1621',
               header: '#17212b',
-              surface: '#17212b',
+              surface: '#242f3d',
               border: '#0b1118',
               accent: '#5288c1',
               accentHover: '#6499d3',
               bubbleIn: '#182533',
               bubbleOut: '#2b5278',
               muted: '#708499',
-              dateBadge: '#18222d'
+              dateBadge: '#111921',
+              systemBadge: '#18222d',
+              replyBar: '#5288c1',
+              avatarFallback: '#2b5278'
             }
           }
         }
@@ -32,134 +36,177 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
       font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-tap-highlight-color: transparent;
       overflow: hidden;
       background-color: #0e1621;
     }
-    .tg-chat-pattern {
+
+    /* Cached Wallpaper Layer */
+    #chatWallpaperStage {
+      position: absolute;
+      inset: 0;
       background-color: #0e1621;
-      background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' opacity='0.035'%3E%3Cpath fill='%23ffffff' d='M60 15a45 45 0 1 0 45 45 45 45 0 0 0-45-45zm0 82a37 37 0 1 1 37-37 37 37 0 0 1-37 37zm-7-51h14v10H53zm0 18h14v18H53z'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='20' r='5'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='20' r='6'/%3E%3Ccircle fill='%23ffffff' cx='20' cy='100' r='6'/%3E%3Ccircle fill='%23ffffff' cx='100' cy='100' r='5'/%3E%3Cpath fill='%23ffffff' d='M25 50l6 8-8 6 8 6-6 8-6-8-8 6 6-8-6-8 8-6z'/%3E%3C/svg%3E");
-      background-attachment: fixed;
+      background-repeat: repeat;
+      background-position: center;
+      background-size: cover;
+      opacity: 0.95;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in;
     }
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
+
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
     .custom-scroll::-webkit-scrollbar-track { background: transparent; }
     .custom-scroll::-webkit-scrollbar-thumb {
       background: rgba(112, 132, 153, 0.25);
-      border-radius: 10px;
+      border-radius: 9999px;
     }
-    .custom-scroll::-webkit-scrollbar-thumb:hover {
-      background: rgba(112, 132, 153, 0.45);
-    }
-    .message-bubble {
-      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(112, 132, 153, 0.5); }
+
+    /* Authentic TG Bubble Shadows & Geometry */
+    .tg-bubble {
+      box-shadow: 0 1px 2px rgba(16, 24, 34, 0.4);
+      position: relative;
       word-break: break-word;
     }
+    .tg-bubble.in::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -6px;
+      width: 12px;
+      height: 14px;
+      background: radial-gradient(circle at 0 0, transparent 12px, #182533 13px);
+      clip-path: polygon(0 100%, 100% 100%, 100% 0);
+    }
+    .tg-bubble.out::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: -6px;
+      width: 12px;
+      height: 14px;
+      background: radial-gradient(circle at 100% 0, transparent 12px, #2b5278 13px);
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+
     .highlight-flash {
       animation: flash-highlight 1.5s ease-out;
     }
     @keyframes flash-highlight {
-      0% { background-color: rgba(82, 136, 193, 0.45); }
+      0% { background-color: rgba(82, 136, 193, 0.4); }
       100% { background-color: transparent; }
     }
+
+    .reaction-pill {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s;
+    }
+    .reaction-pill:active { transform: scale(0.92); }
   </style>
 </head>
-<body class="h-full flex flex-col antialiased text-slate-100">
+<body class="h-full flex flex-col antialiased text-[#f5f5f5]">
 
-  <!-- TOP BAR -->
-  <header class="h-14 flex-shrink-0 bg-tg-header border-b border-tg-border px-4 flex items-center justify-between z-30 shadow-sm">
+  <!-- HEADER -->
+  <header class="h-[54px] flex-shrink-0 bg-tg-header border-b border-tg-border px-4 flex items-center justify-between z-30 shadow-sm relative">
     <div id="openGroupInfoBtn" class="flex items-center gap-3 cursor-pointer hover:opacity-90 transition min-w-0">
-      <div class="relative w-10 h-10 rounded-full overflow-hidden bg-[#2b5278] flex items-center justify-center font-bold text-white flex-shrink-0 shadow border border-slate-700">
+      <div class="relative w-10 h-10 rounded-full overflow-hidden bg-tg-avatarFallback flex items-center justify-center font-bold text-white flex-shrink-0 shadow border border-slate-700/50">
         <img id="headerGroupAvatar" src="" alt="Grp" class="w-full h-full object-cover hidden" />
-        <span id="headerGroupFallback" class="text-base font-bold">T</span>
+        <span id="headerGroupFallback" class="text-sm font-bold">T</span>
       </div>
 
-      <div class="flex flex-col min-w-0">
+      <div class="flex flex-col min-w-0 leading-tight">
         <div class="flex items-center gap-1.5">
-          <h1 id="headerGroupTitle" class="text-sm font-semibold text-white truncate">Tallentex Discussion Grp 10th</h1>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-tg-muted"></i>
+          <h1 id="headerGroupTitle" class="text-[14px] font-semibold text-white tracking-tight truncate">Tallentex Discussion Grp 10th</h1>
+          <svg class="w-3.5 h-3.5 text-tg-muted fill-current flex-shrink-0" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
         </div>
-        <div class="flex items-center gap-2 text-xs text-tg-muted truncate">
+        <div class="flex items-center gap-1.5 text-[12px] text-tg-muted truncate mt-0.5">
           <span id="headerMemberCounter">0 members</span>
           <span class="inline-block w-1 h-1 rounded-full bg-slate-500"></span>
-          <span class="text-emerald-400 font-medium text-[11px]" id="headerOnlineCounter">1 online</span>
+          <span class="text-emerald-400 font-medium" id="headerOnlineCounter">1 online</span>
         </div>
       </div>
     </div>
 
     <div class="flex items-center gap-2">
-      <button id="openMyProfileBtn" class="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-tg-bg/70 hover:bg-tg-bg border border-tg-border text-xs text-slate-200 transition shadow-sm">
+      <button id="openMyProfileBtn" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-tg-bg/70 hover:bg-tg-bg border border-tg-border text-xs text-slate-200 transition shadow-sm" title="Your Settings">
         <img id="myHeaderAvatar" src="" class="w-6 h-6 rounded-full object-cover border border-slate-600 hidden" />
         <div id="myHeaderFallback" class="w-6 h-6 rounded-full bg-tg-accent text-white flex items-center justify-center font-bold text-[11px]">?</div>
         <span id="myHeaderHandle" class="font-medium max-w-[90px] truncate">@loading</span>
-        <span id="myRoleTagBadge" class="hidden text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider"></span>
+        <span id="myRoleTagBadge" class="hidden text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider"></span>
       </button>
     </div>
   </header>
 
   <!-- PINNED BANNER -->
-  <div id="pinnedMessageBar" class="hidden h-11 bg-tg-header/95 backdrop-blur border-b border-tg-border px-4 flex items-center justify-between text-xs z-20 cursor-pointer hover:bg-tg-header transition">
-    <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5 flex-1" id="pinnedBannerContent">
-      <i data-lucide="pin" class="w-3.5 h-3.5 text-tg-accent flex-shrink-0"></i>
-      <div class="min-w-0">
-        <p class="font-bold text-tg-accent leading-none text-[11px]">Pinned Message</p>
-        <p id="pinnedBannerText" class="text-slate-300 truncate leading-tight text-[11px] mt-0.5">...</p>
+  <div id="pinnedMessageBar" class="hidden h-11 bg-tg-header/95 backdrop-blur-md border-b border-tg-border px-4 flex items-center justify-between text-xs z-20 cursor-pointer hover:bg-tg-header transition">
+    <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-replyBar pl-2.5 flex-1" id="pinnedBannerContent">
+      <svg class="w-4 h-4 text-tg-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path></svg>
+      <div class="min-w-0 leading-tight">
+        <p class="font-semibold text-tg-accent text-[11px]">Pinned Message</p>
+        <p id="pinnedBannerText" class="text-slate-300 truncate text-[11px] mt-0.5">...</p>
       </div>
     </div>
-    <button id="unpinMessageBtn" class="text-tg-muted hover:text-red-400 p-1 rounded transition hidden" title="Unpin message">
-      <i data-lucide="x" class="w-3.5 h-3.5"></i>
+    <button id="unpinMessageBtn" class="text-tg-muted hover:text-red-400 p-1.5 rounded transition hidden" title="Unpin message">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
   </div>
 
-  <!-- CHAT WINDOW -->
-  <main class="flex-1 flex flex-col min-h-0 relative tg-chat-pattern">
-    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 border border-slate-700 text-white text-xs px-4 py-2 rounded-xl shadow-2xl flex items-center gap-2 transform -translate-y-8 opacity-0 pointer-events-none transition-all duration-200">
-      <i data-lucide="info" class="w-4 h-4 text-tg-accent" id="toastIcon"></i>
+  <!-- CHAT MAIN -->
+  <main class="flex-1 flex flex-col min-h-0 relative">
+    
+    <!-- WALLPAPER CANVAS/LAYER -->
+    <div id="chatWallpaperStage"></div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-[#17212b]/95 border border-slate-700/70 text-white text-xs px-4 py-2 rounded-xl shadow-2xl flex items-center gap-2 transform -translate-y-8 opacity-0 pointer-events-none transition-all duration-200">
+      <span id="toastIconSlot" class="w-4 h-4 text-tg-accent flex-shrink-0"></span>
       <span id="toastMessage">Notification</span>
     </div>
 
-    <div id="chatMessages" class="flex-1 overflow-y-auto px-3 sm:px-8 py-4 space-y-2.5 custom-scroll select-text">
+    <!-- MESSAGES STACK -->
+    <div id="chatMessages" class="flex-1 overflow-y-auto px-3 sm:px-12 py-3 space-y-2 custom-scroll z-10 select-text">
       <div id="chatLoadingIndicator" class="flex flex-col items-center justify-center h-full text-tg-muted gap-2 text-xs select-none">
         <div class="w-6 h-6 border-2 border-tg-muted/30 border-t-tg-accent rounded-full animate-spin"></div>
-        <span>Syncing Realtime Database...</span>
+        <span>Syncing vault...</span>
       </div>
     </div>
 
-    <!-- Reply Banner -->
-    <div id="replyBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
-      <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-accent pl-2.5">
-        <i data-lucide="reply" class="w-4 h-4 text-tg-accent flex-shrink-0"></i>
-        <div class="min-w-0">
-          <p id="replyUserText" class="font-bold text-tg-accent truncate leading-tight">Reply</p>
-          <p id="replySnippetText" class="text-tg-muted truncate leading-normal text-[11px]">Message</p>
+    <!-- REPLY DRAWER -->
+    <div id="replyBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-1.5 flex items-center justify-between text-xs z-20 select-none">
+      <div class="flex items-center gap-2.5 min-w-0 border-l-2 border-tg-replyBar pl-2.5">
+        <svg class="w-4 h-4 text-tg-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+        <div class="min-w-0 leading-tight">
+          <p id="replyUserText" class="font-bold text-tg-accent truncate text-[11px]">Reply</p>
+          <p id="replySnippetText" class="text-tg-muted truncate text-[11px]">Message</p>
         </div>
       </div>
       <button id="cancelReplyBtn" class="text-tg-muted hover:text-white p-1 rounded transition">
-        <i data-lucide="x" class="w-4 h-4"></i>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     </div>
 
-    <!-- Image Attachment Banner -->
-    <div id="attachmentBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-10 select-none">
+    <!-- ATTACHMENT PREVIEW DRAWER -->
+    <div id="attachmentBar" class="hidden bg-tg-header border-t border-tg-border px-4 py-2 flex items-center justify-between text-xs z-20 select-none">
       <div class="flex items-center gap-2.5 min-w-0">
-        <div id="attachmentPreviewWrapper" class="w-8 h-8 rounded bg-tg-border flex items-center justify-center overflow-hidden flex-shrink-0">
-          <i data-lucide="image" class="w-4 h-4 text-tg-muted"></i>
-        </div>
-        <div class="min-w-0">
-          <p id="attachmentNameText" class="font-medium text-slate-200 truncate">photo.png</p>
-          <p id="attachmentSizeText" class="text-[10px] text-tg-muted">0 KB</p>
+        <div id="attachmentPreviewWrapper" class="w-9 h-9 rounded bg-tg-border flex items-center justify-center overflow-hidden flex-shrink-0 border border-slate-700"></div>
+        <div class="min-w-0 leading-tight">
+          <p id="attachmentNameText" class="font-medium text-slate-200 truncate text-[11px]">photo.jpg</p>
+          <p id="attachmentSizeText" class="text-[10px] text-tg-muted mt-0.5">0 KB</p>
         </div>
       </div>
       <button id="cancelAttachmentBtn" class="text-tg-muted hover:text-white p-1 rounded transition">
-        <i data-lucide="x" class="w-4 h-4"></i>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     </div>
 
-    <!-- Emoji Picker -->
+    <!-- EMOJI PICKER -->
     <div id="emojiPicker" class="hidden absolute bottom-16 left-4 bg-tg-header border border-tg-border rounded-2xl p-2 shadow-2xl z-40 grid grid-cols-7 gap-1 w-64 select-none">
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">👍</button>
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">❤️</button>
@@ -177,29 +224,29 @@
       <button class="emoji-opt p-1 hover:bg-tg-bg rounded text-lg text-center transition">🧠</button>
     </div>
 
-    <!-- Input Bar -->
+    <!-- INPUT DOCK -->
     <div class="bg-tg-header border-t border-tg-border px-3 sm:px-4 py-2 flex items-end gap-2 relative z-20 select-none">
       <input type="file" id="fileInput" accept="image/*" class="hidden" />
       <button id="attachmentBtn" type="button" class="p-2 text-tg-muted hover:text-tg-accent hover:bg-tg-bg rounded-full transition flex-shrink-0" title="Attach picture">
-        <i data-lucide="paperclip" class="w-5 h-5"></i>
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 0 1 5 0v10.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5V6H9v9.5a3 3 0 0 0 6 0V5a4 4 0 0 0-8 0v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
       </button>
 
-      <div class="flex-1 bg-tg-bg border border-tg-border rounded-2xl flex items-center px-3 py-1.5 focus-within:border-tg-accent transition">
+      <div class="flex-1 bg-tg-bg border border-tg-border rounded-[20px] flex items-center px-3.5 py-1.5 focus-within:border-tg-accent transition">
         <textarea 
           id="messageInput" 
           rows="1" 
           placeholder="Write a message..." 
-          class="w-full bg-transparent text-sm text-slate-100 placeholder-tg-muted focus:outline-none resize-none max-h-32 custom-scroll py-0.5 select-text"
+          class="w-full bg-transparent text-[14px] text-slate-100 placeholder-tg-muted focus:outline-none resize-none max-h-32 custom-scroll py-0.5 select-text leading-relaxed"
         ></textarea>
         
         <button id="emojiBtn" type="button" class="p-1 text-tg-muted hover:text-amber-400 rounded-lg transition ml-1 flex-shrink-0" title="Emoji">
-          <i data-lucide="smile" class="w-5 h-5"></i>
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
         </button>
       </div>
 
       <div class="relative flex-shrink-0">
         <button id="sendBtn" type="button" class="w-10 h-10 rounded-full bg-tg-accent hover:bg-tg-accentHover text-white flex items-center justify-center transition shadow disabled:opacity-50">
-          <i data-lucide="send" class="w-4 h-4 ml-0.5"></i>
+          <svg class="w-4 h-4 ml-0.5 fill-current" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
         <div id="cooldownRing" class="hidden absolute -top-1 -right-1 bg-amber-500 text-slate-950 font-extrabold text-[9px] w-5 h-5 rounded-full flex items-center justify-center shadow">
           3s
@@ -214,12 +261,11 @@
       <div class="h-14 px-4 border-b border-tg-border flex items-center justify-between flex-shrink-0 bg-tg-header">
         <div class="flex items-center gap-2">
           <button id="closeGroupInfoBtn" class="p-1.5 text-tg-muted hover:text-white rounded-lg transition">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
           </button>
           <span class="font-bold text-sm text-white">Group Info</span>
         </div>
         <button id="ownerEditGroupBtn" class="hidden text-xs font-semibold text-tg-accent hover:underline flex items-center gap-1">
-          <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
           <span>Edit Group</span>
         </button>
       </div>
@@ -230,7 +276,7 @@
             <img id="drawerGroupAvatar" src="" class="w-full h-full object-cover hidden" />
             <span id="drawerGroupFallback">T</span>
           </div>
-          <h2 id="drawerGroupName" class="text-lg font-bold text-white mt-3">Tallentex Discussion Grp 10th</h2>
+          <h2 id="drawerGroupName" class="text-[17px] font-bold text-white mt-3">Tallentex Discussion Grp 10th</h2>
           <p id="drawerGroupDesc" class="text-xs text-tg-muted mt-1 px-4 leading-relaxed">Allen Tallentex 2025/2026 Academic Study Group & Question Solving.</p>
           <span id="drawerGroupTotalBadge" class="mt-2 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-tg-bg text-tg-muted border border-tg-border">200 Members Capacity</span>
         </div>
@@ -254,7 +300,7 @@
   <div id="editGroupModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-tg-header border border-tg-border rounded-3xl w-full max-w-md p-6 shadow-2xl">
       <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
-        <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
+        <span class="text-amber-400 font-bold">★</span>
         <span>Owner Settings: Edit Group Profile</span>
       </h3>
       <div class="space-y-3.5 text-xs">
@@ -272,7 +318,7 @@
             <input type="text" id="editGroupAvatarUrlInput" placeholder="https://..." class="flex-1 bg-tg-bg border border-tg-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-tg-accent" />
             <input type="file" id="groupIconFileInput" accept="image/*" class="hidden" />
             <button type="button" id="triggerUploadGroupIconBtn" class="px-3 py-2 bg-tg-bg hover:bg-tg-border border border-tg-border rounded-xl text-slate-300">
-              <i data-lucide="upload" class="w-4 h-4"></i>
+              Upload
             </button>
           </div>
         </div>
@@ -284,15 +330,15 @@
     </div>
   </div>
 
-  <!-- PROFILE MODAL -->
+  <!-- PROFILE SETUP MODAL -->
   <div id="profileModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-tg-header border border-tg-border rounded-3xl w-full max-w-md p-6 shadow-2xl">
       <div class="text-center mb-5">
         <div class="w-16 h-16 rounded-full bg-tg-accent/20 border border-tg-accent/40 flex items-center justify-center mx-auto mb-2.5 text-tg-accent">
-          <i data-lucide="user-check" class="w-8 h-8"></i>
+          <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </div>
         <h2 id="modalProfileTitle" class="text-lg font-bold text-white">Join Tallentex Vault</h2>
-        <p class="text-xs text-tg-muted mt-0.5">Set up your handle to chat with Class 10 toppers</p>
+        <p class="text-xs text-tg-muted mt-0.5">Set your handle to participate in discussions</p>
       </div>
 
       <div class="space-y-4">
@@ -319,7 +365,6 @@
             </div>
             <input type="file" id="modalAvatarFileInput" accept="image/*" class="hidden" />
             <button type="button" id="modalAvatarUploadBtn" class="flex-1 py-2 px-3 rounded-xl bg-tg-bg hover:bg-tg-border border border-tg-border text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5">
-              <i data-lucide="upload" class="w-4 h-4 text-tg-accent"></i>
               <span>Upload Custom Photo</span>
             </button>
           </div>
@@ -358,12 +403,28 @@
     </div>
   </div>
 
+  <!-- CONTEXT MENU MODAL (MOBILE LONG-PRESS / DESKTOP OPTION) -->
+  <div id="contextMenuOverlay" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-tg-header border border-tg-border rounded-2xl w-60 overflow-hidden shadow-2xl p-1.5 space-y-0.5">
+      <button id="ctxReplyBtn" class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-slate-200 hover:bg-tg-bg rounded-xl transition text-left">
+        <svg class="w-4 h-4 text-tg-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+        <span>Reply</span>
+      </button>
+      <button id="ctxPinBtn" class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-slate-200 hover:bg-tg-bg rounded-xl transition text-left hidden">
+        <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path></svg>
+        <span>Pin Message</span>
+      </button>
+      <button id="ctxDeleteBtn" class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-red-400 hover:bg-tg-bg rounded-xl transition text-left hidden">
+        <svg class="w-4 h-4 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Delete Message</span>
+      </button>
+      <button id="ctxCloseBtn" class="w-full text-center py-1.5 text-[11px] text-tg-muted hover:text-white pt-2 border-t border-tg-border">Close</button>
+    </div>
+  </div>
+
   <!-- BANNED LOCK OVERLAY -->
   <div id="bannedScreen" class="hidden fixed inset-0 z-50 bg-red-950/95 backdrop-blur-md flex items-center justify-center p-6 text-center select-none">
     <div class="bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full shadow-2xl">
-      <div class="w-16 h-16 rounded-full bg-red-600/20 border border-red-500 flex items-center justify-center mx-auto mb-4 text-red-500">
-        <i data-lucide="shield-alert" class="w-8 h-8"></i>
-      </div>
       <h2 class="text-xl font-bold text-white mb-2">Access Terminated</h2>
       <p class="text-xs text-red-300 leading-relaxed mb-4">
         Your device & IP were automatically banned for sending prohibited or abusive words in this group.
@@ -374,11 +435,11 @@
     </div>
   </div>
 
-  <!-- REALTIME DATABASE ONLY (Web SDK v10 Modular via WebSocket) -->
+  <!-- CORE LOGIC & FIREBASE REALTIME DATABASE ONLY -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import { 
-      getDatabase, ref, set, get, push, update, remove, onValue, serverTimestamp, query, limitToLast, orderByChild
+      getDatabase, ref, set, get, push, update, remove, onValue, serverTimestamp, query, limitToLast
     } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -420,7 +481,42 @@
       avatarUrl: ""
     };
 
-    // Elements
+    // Authentic Telegram Double-Check SVGs
+    const TG_SVG_READ = `<svg class="w-3.5 h-3.5 inline ml-1 text-[#4faeef] fill-current" viewBox="0 0 16 11"><path d="M11.07.13a.75.75 0 0 0-1.06 0L5.3 4.84l-1.8-1.8a.75.75 0 0 0-1.06 1.06l2.33 2.33a.75.75 0 0 0 1.06 0l5.24-5.24a.75.75 0 0 0 0-1.06zm4.8 0a.75.75 0 0 0-1.06 0l-7.3 7.3-1.06-1.06a.75.75 0 1 0-1.06 1.06l1.59 1.59a.75.75 0 0 0 1.06 0l7.83-7.83a.75.75 0 0 0 0-1.06z"/></svg>`;
+
+    // Wallaper Persistent Cache System
+    function initWallpaper() {
+      const stage = document.getElementById("chatWallpaperStage");
+      const cached = localStorage.getItem("ttx_wallpaper_cached");
+
+      if (cached) {
+        stage.style.backgroundImage = `url("${cached}")`;
+      } else {
+        // Load background.jpg from local folder and cache as base64
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = "background.jpg";
+        img.onload = () => {
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+            localStorage.setItem("ttx_wallpaper_cached", dataUrl);
+            stage.style.backgroundImage = `url("${dataUrl}")`;
+          } catch (e) {
+            stage.style.backgroundImage = `url("background.jpg")`;
+          }
+        };
+        img.onerror = () => {
+          stage.style.backgroundImage = `url("background.jpg")`;
+        };
+      }
+    }
+
+    // DOM Elements
     const chatMessages = document.getElementById("chatMessages");
     const messageInput = document.getElementById("messageInput");
     const sendBtn = document.getElementById("sendBtn");
@@ -486,6 +582,14 @@
     const saveProfileBtn = document.getElementById("saveProfileBtn");
     const cancelProfileModalBtn = document.getElementById("cancelProfileModalBtn");
 
+    // Context Menu Overlay Elements
+    const contextMenuOverlay = document.getElementById("contextMenuOverlay");
+    const ctxReplyBtn = document.getElementById("ctxReplyBtn");
+    const ctxPinBtn = document.getElementById("ctxPinBtn");
+    const ctxDeleteBtn = document.getElementById("ctxDeleteBtn");
+    const ctxCloseBtn = document.getElementById("ctxCloseBtn");
+    let activeContextMsg = null;
+
     if (!currentUser.uid) {
       currentUser.uid = 'u_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
       localStorage.setItem("ttx_uid", currentUser.uid);
@@ -493,11 +597,8 @@
 
     function triggerToast(msg, icon = "info", isError = false) {
       document.getElementById("toastMessage").textContent = msg;
-      const tIcon = document.getElementById("toastIcon");
-      tIcon.setAttribute("data-lucide", isError ? "alert-circle" : icon);
       toast.classList.remove("-translate-y-8", "opacity-0", "pointer-events-none");
       toast.classList.add("translate-y-0", "opacity-100");
-      lucide.createIcons();
       setTimeout(() => {
         toast.classList.remove("translate-y-0", "opacity-100");
         toast.classList.add("-translate-y-8", "opacity-0", "pointer-events-none");
@@ -520,7 +621,7 @@
           return true;
         }
       } catch (err) {
-        console.warn("Ban check:", err);
+        console.warn("Ban check error:", err);
       }
       return false;
     }
@@ -559,12 +660,12 @@
 
       if (currentUser.role === 'owner') {
         myRoleTagBadge.textContent = "OWNER";
-        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30";
+        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30";
         myRoleTagBadge.classList.remove("hidden");
         ownerEditGroupBtn.classList.remove("hidden");
       } else if (currentUser.role === 'admin') {
         myRoleTagBadge.textContent = "ADMIN";
-        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30";
+        myRoleTagBadge.className = "text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30";
         myRoleTagBadge.classList.remove("hidden");
         ownerEditGroupBtn.classList.add("hidden");
       } else {
@@ -573,7 +674,6 @@
       }
     }
 
-    // Sync Group Metadata Real-time
     function listenToGroupMetadata() {
       const gRef = ref(db, "tallentex_group_info/main");
       onValue(gRef, (snap) => {
@@ -607,7 +707,6 @@
       });
     }
 
-    // Sync Members Real-time
     let allMembersCache = [];
     function listenToMembers() {
       const usersRef = ref(db, "tallentex_users");
@@ -690,10 +789,7 @@
     }
 
     window.promoteToAdmin = async function(targetUid, targetHandle) {
-      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
-        triggerToast("Only admins can promote users", "alert-triangle", true);
-        return;
-      }
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') return;
       try {
         await update(ref(db, `tallentex_users/${targetUid}`), { role: "admin" });
         push(ref(db, "tallentex_chat"), {
@@ -701,21 +797,15 @@
           text: `@${currentUser.handle} promoted @${targetHandle} to Admin.`,
           timestamp: serverTimestamp()
         });
-        triggerToast(`@${targetHandle} is now an Admin`, "shield-check");
+        triggerToast(`@${targetHandle} is now an Admin`);
       } catch (e) {
         triggerToast("Action failed", "alert-circle", true);
       }
     };
 
     window.demoteAdmin = async function(targetUid, targetHandle) {
-      if (targetHandle.toLowerCase() === OWNER_HANDLE) {
-        triggerToast("Cannot modify the group Owner!", "shield-alert", true);
-        return;
-      }
-      if (currentUser.role !== 'owner') {
-        triggerToast("Only the Owner can dismiss admins", "shield-alert", true);
-        return;
-      }
+      if (targetHandle.toLowerCase() === OWNER_HANDLE) return;
+      if (currentUser.role !== 'owner') return;
       try {
         await update(ref(db, `tallentex_users/${targetUid}`), { role: "member" });
         push(ref(db, "tallentex_chat"), {
@@ -723,7 +813,7 @@
           text: `@${currentUser.handle} demoted @${targetHandle} to Member.`,
           timestamp: serverTimestamp()
         });
-        triggerToast(`@${targetHandle} dismissed from admin`, "info");
+        triggerToast(`@${targetHandle} dismissed from admin`);
       } catch (e) {
         triggerToast("Action failed", "alert-circle", true);
       }
@@ -745,7 +835,7 @@
       const reader = new FileReader();
       reader.onload = (re) => {
         editGroupAvatarUrlInput.value = re.target.result;
-        triggerToast("Icon loaded!", "check");
+        triggerToast("Icon ready!");
       };
       reader.readAsDataURL(f);
     });
@@ -755,10 +845,7 @@
       const newDesc = editGroupDescInput.value.trim();
       const newUrl = editGroupAvatarUrlInput.value.trim();
 
-      if (!newName) {
-        triggerToast("Group name cannot be empty", "alert-circle", true);
-        return;
-      }
+      if (!newName) return;
 
       try {
         await update(ref(db, "tallentex_group_info/main"), {
@@ -771,23 +858,20 @@
 
         push(ref(db, "tallentex_chat"), {
           type: "system",
-          text: `@${currentUser.handle} updated the group profile settings.`,
+          text: `@${currentUser.handle} updated the group settings.`,
           timestamp: serverTimestamp()
         });
 
         editGroupModal.classList.add("hidden");
-        triggerToast("Group profile updated", "check");
+        triggerToast("Group updated");
       } catch (e) {
-        triggerToast("Failed to update group", "alert-triangle", true);
+        triggerToast("Update failed", "alert-circle", true);
       }
     });
 
-    // Pinning Mechanism
+    // Pinned Messages
     window.pinMessage = async function(messageId, snippet) {
-      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
-        triggerToast("Only admins can pin messages", "shield-alert", true);
-        return;
-      }
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') return;
       try {
         await set(ref(db, "tallentex_group_info/pinned"), {
           messageId: messageId,
@@ -795,23 +879,20 @@
           pinnedBy: currentUser.handle,
           timestamp: serverTimestamp()
         });
-        triggerToast("Message pinned", "pin");
+        triggerToast("Message pinned");
       } catch (e) {
-        triggerToast("Could not pin message", "alert-circle", true);
+        triggerToast("Could not pin", "alert-circle", true);
       }
     };
 
     unpinMessageBtn.addEventListener("click", async (e) => {
       e.stopPropagation();
-      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') {
-        triggerToast("Only admins can unpin messages", "shield-alert", true);
-        return;
-      }
+      if (currentUser.role !== 'owner' && currentUser.role !== 'admin') return;
       try {
         await remove(ref(db, "tallentex_group_info/pinned"));
-        triggerToast("Message unpinned", "info");
+        triggerToast("Message unpinned");
       } catch (e) {
-        triggerToast("Failed to unpin", "alert-circle", true);
+        triggerToast("Unpin failed", "alert-circle", true);
       }
     });
 
@@ -844,13 +925,10 @@
       const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
       const isMine = messageUid === currentUser.uid;
 
-      if (!isMine && !isOwnerOrAdmin) {
-        triggerToast("You cannot delete another member's message", "shield-alert", true);
-        return;
-      }
+      if (!isMine && !isOwnerOrAdmin) return;
 
       if (senderHandle && senderHandle.toLowerCase() === OWNER_HANDLE && currentUser.handle.toLowerCase() !== OWNER_HANDLE) {
-        triggerToast("Nobody can delete the Owner's messages!", "shield-alert", true);
+        triggerToast("Cannot delete the Owner's message!", "shield-alert", true);
         return;
       }
 
@@ -858,9 +936,9 @@
 
       try {
         await remove(ref(db, `tallentex_chat/${messageId}`));
-        triggerToast("Message deleted", "trash-2");
+        triggerToast("Message deleted");
       } catch (e) {
-        triggerToast("Failed to delete", "alert-circle", true);
+        triggerToast("Delete failed", "alert-circle", true);
       }
     };
 
@@ -874,15 +952,31 @@
       const clean = sanitize(text);
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       return clean.replace(urlRegex, (url) => {
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-[#64b5f6] hover:underline">${url}</a>`;
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-[#6ab2f2] hover:underline">${url}</a>`;
       });
     }
 
+    // Reaction Toggling
+    window.toggleReaction = async function(msgId, emoji) {
+      try {
+        const reactionRef = ref(db, `tallentex_chat/${msgId}/reactions/${emoji}/${currentUser.uid}`);
+        const snap = await get(reactionRef);
+        if (snap.exists()) {
+          await remove(reactionRef);
+        } else {
+          await set(reactionRef, true);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    // Render Clean Telegram Bubble
     function renderMessage(id, data) {
       if (data.type === "system") {
         return `
           <div id="msg-${id}" class="flex justify-center my-2">
-            <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-tg-dateBadge/90 border border-tg-border text-slate-300 shadow select-none">
+            <span class="px-3 py-0.5 rounded-full text-[11px] font-medium bg-tg-systemBadge/90 border border-tg-border text-[#a4b5c6] shadow select-none">
               ${sanitize(data.text)}
             </span>
           </div>
@@ -891,9 +985,6 @@
 
       const isMe = data.uid === currentUser.uid;
       const senderRole = resolveUserRole(data.handle, data.role);
-      const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
-      const canDelete = isMe || isOwnerOrAdmin;
-
       const dateObj = data.timestamp ? new Date(data.timestamp) : new Date();
       const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -907,8 +998,8 @@
       let replyMarkup = "";
       if (data.replyTo) {
         replyMarkup = `
-          <div onclick="window.jumpToMessage('${data.replyTo.id}')" class="mb-1.5 px-2 py-1 rounded bg-black/20 border-l-2 border-[#5288c1] text-xs cursor-pointer hover:bg-black/30 transition select-none">
-            <div class="font-bold text-[11px] text-[#5288c1] truncate leading-tight">@${sanitize(data.replyTo.handle)}</div>
+          <div onclick="window.jumpToMessage('${data.replyTo.id}')" class="mb-1.5 px-2 py-1 rounded bg-black/25 border-l-2 border-[#5288c1] text-xs cursor-pointer hover:bg-black/35 transition select-none">
+            <div class="font-bold text-[11px] text-[#6ab2f2] truncate leading-tight">@${sanitize(data.replyTo.handle)}</div>
             <div class="text-[11px] text-slate-300 truncate">${sanitize(data.replyTo.text || "Photo")}</div>
           </div>
         `;
@@ -917,7 +1008,7 @@
       let mediaMarkup = "";
       if (data.media) {
         mediaMarkup = `
-          <div class="mb-1.5 rounded-xl overflow-hidden bg-black/30 max-h-72">
+          <div class="mb-1.5 rounded-xl overflow-hidden bg-black/40 max-h-72">
             <a href="${data.media.url}" target="_blank">
               <img src="${data.media.url}" alt="Attachment" class="w-full h-auto object-cover max-h-72 hover:opacity-95 transition" loading="lazy" />
             </a>
@@ -925,6 +1016,7 @@
         `;
       }
 
+      // Reaction pill row below bubble
       const reactions = data.reactions || {};
       let reactionsMarkup = "";
       for (const [emoji, usersObj] of Object.entries(reactions)) {
@@ -936,9 +1028,9 @@
               <button 
                 type="button" 
                 onclick="window.toggleReaction('${id}', '${emoji}')" 
-                class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] transition ${hasReacted ? 'bg-[#5288c1]/30 border border-[#5288c1] text-white' : 'bg-black/20 border border-white/5 text-slate-300'}">
+                class="reaction-pill inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[12px] font-medium border ${hasReacted ? 'bg-[#2b5278] border-[#5288c1] text-white' : 'bg-[#182533] border-slate-700/60 text-slate-300'}">
                 <span>${emoji}</span>
-                <span class="font-medium text-[10px]">${uids.length}</span>
+                <span class="text-[10px] text-slate-200">${uids.length}</span>
               </button>
             `;
           }
@@ -948,49 +1040,42 @@
       const escapedSnippet = (data.text || 'Photo').replace(/'/g, "\\'");
 
       return `
-        <div id="msg-${id}" class="group relative flex gap-2 max-w-[88%] sm:max-w-[70%] ${isMe ? 'ml-auto flex-row-reverse' : 'mr-auto flex-row'}">
+        <div id="msg-${id}" data-msg-id="${id}" data-msg-uid="${data.uid}" data-msg-handle="${data.handle}" data-msg-snippet="${escapedSnippet}" class="msg-wrapper group relative flex gap-2 max-w-[86%] sm:max-w-[65%] ${isMe ? 'ml-auto flex-row-reverse' : 'mr-auto flex-row'}">
+          
           ${!isMe ? `
-            <div class="w-8 h-8 rounded-full bg-[#2b5278] border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0 mt-0.5 shadow">
+            <div class="w-8 h-8 rounded-full bg-[#2b5278] border border-slate-700 flex items-center justify-center overflow-hidden flex-shrink-0 mt-auto shadow">
               <img src="${data.avatarUrl || 'https://api.dicebear.com/7.x/bottts/svg?seed=' + data.handle}" class="w-full h-full object-cover" />
             </div>
           ` : ''}
 
           <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} min-w-0">
-            <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-3.5 ${isMe ? 'right-0' : 'left-8'} flex items-center gap-0.5 bg-tg-header border border-tg-border px-1.5 py-0.5 rounded-full shadow-lg z-10 text-slate-300">
-              <button onclick="window.setReplyTarget('${id}', '${data.handle}', '${escapedSnippet}')" class="p-1 hover:text-white" title="Reply">
-                <i data-lucide="reply" class="w-3.5 h-3.5"></i>
-              </button>
-              <button onclick="window.toggleReaction('${id}', '👍')" class="p-1 hover:text-white" title="Like">👍</button>
-              <button onclick="window.toggleReaction('${id}', '❤️')" class="p-1 hover:text-white" title="Heart">❤️</button>
-              <button onclick="window.toggleReaction('${id}', '🔥')" class="p-1 hover:text-white" title="Fire">🔥</button>
-
-              ${isOwnerOrAdmin ? `
-                <button onclick="window.pinMessage('${id}', '${escapedSnippet}')" class="p-1 hover:text-amber-400" title="Pin Message">
-                  <i data-lucide="pin" class="w-3.5 h-3.5"></i>
-                </button>
-              ` : ''}
-
-              ${canDelete ? `
-                <button onclick="window.deleteMessage('${id}', '${data.uid}', '${data.handle}')" class="p-1 hover:text-red-400" title="Delete Message">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                </button>
-              ` : ''}
+            
+            <!-- Telegram Floating Reaction Tray (Hover Desktop) -->
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute -top-8 ${isMe ? 'right-0' : 'left-9'} hidden sm:flex items-center gap-1 bg-[#17212b] border border-[#0b1118] px-2 py-1 rounded-full shadow-2xl z-30 select-none">
+              <button onclick="window.toggleReaction('${id}', '👍')" class="hover:scale-125 transition-transform text-sm p-0.5">👍</button>
+              <button onclick="window.toggleReaction('${id}', '❤️')" class="hover:scale-125 transition-transform text-sm p-0.5">❤️</button>
+              <button onclick="window.toggleReaction('${id}', '🔥')" class="hover:scale-125 transition-transform text-sm p-0.5">🔥</button>
+              <button onclick="window.toggleReaction('${id}', '😂')" class="hover:scale-125 transition-transform text-sm p-0.5">😂</button>
+              <button onclick="window.toggleReaction('${id}', '😮')" class="hover:scale-125 transition-transform text-sm p-0.5">😮</button>
+              <button onclick="window.toggleReaction('${id}', '👏')" class="hover:scale-125 transition-transform text-sm p-0.5">👏</button>
             </div>
 
-            <div class="message-bubble rounded-2xl px-3.5 py-1.5 ${isMe ? 'bg-tg-bubbleOut text-white rounded-tr-xs' : 'bg-tg-bubbleIn text-slate-100 rounded-tl-xs'}">
+            <!-- Bubble Body -->
+            <div class="tg-bubble ${isMe ? 'out bg-tg-bubbleOut text-white rounded-[16px] rounded-br-[4px]' : 'in bg-tg-bubbleIn text-[#f5f5f5] rounded-[16px] rounded-bl-[4px]'} px-3.5 py-2">
+              
               ${!isMe ? `
-                <div class="flex items-center gap-1.5 mb-1 select-none">
-                  <span class="text-xs font-bold text-sky-400">@${sanitize(data.handle)}</span>${roleBadge}
+                <div class="flex items-center gap-1.5 mb-1 select-none leading-none">
+                  <span class="text-[12px] font-bold text-[#6ab2f2]">@${sanitize(data.handle)}</span>${roleBadge}
                 </div>
               ` : ''}
 
               ${replyMarkup}
               ${mediaMarkup}
-              ${data.text ? `<p class="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap select-text">${formatMessageText(data.text)}</p>` : ''}
+              ${data.text ? `<p class="text-[14px] leading-relaxed whitespace-pre-wrap select-text font-normal">${formatMessageText(data.text)}</p>` : ''}
 
-              <div class="flex items-center justify-end gap-1 mt-0.5 select-none text-[10px] text-slate-400">
+              <div class="flex items-center justify-end gap-1 mt-0.5 select-none text-[11px] text-[#7f99b2] leading-none">
                 <span>${timeStr}</span>
-                ${isMe ? `<i data-lucide="check-check" class="w-3.5 h-3.5 text-sky-300"></i>` : ''}
+                ${isMe ? TG_SVG_READ : ''}
               </div>
             </div>
 
@@ -1014,29 +1099,95 @@
 
         chatMessages.innerHTML = buffer || `
           <div class="flex flex-col items-center justify-center h-full text-tg-muted text-xs gap-1.5 py-12">
-            <i data-lucide="message-circle" class="w-8 h-8 opacity-40"></i>
             <p>Welcome to Tallentex Vault.</p>
             <p class="text-[11px]">Send a question to get started.</p>
           </div>
         `;
-        lucide.createIcons();
+
+        bindMobileGestures();
         chatMessages.scrollTop = chatMessages.scrollHeight;
       });
     }
 
-    window.toggleReaction = async function(msgId, emoji) {
-      try {
-        const reactionRef = ref(db, `tallentex_chat/${msgId}/reactions/${emoji}/${currentUser.uid}`);
-        const snap = await get(reactionRef);
-        if (snap.exists()) {
-          await remove(reactionRef);
-        } else {
-          await set(reactionRef, true);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
+    // Mobile Telegram Logic: Double Tap = Quick React (👍), Hold (500ms) = Context Menu
+    function bindMobileGestures() {
+      document.querySelectorAll(".msg-wrapper").forEach(wrap => {
+        let pressTimer;
+        let lastTap = 0;
+
+        // Long Press Handler
+        const startPress = (e) => {
+          pressTimer = setTimeout(() => {
+            openContextMenu({
+              id: wrap.dataset.msgId,
+              uid: wrap.dataset.msgUid,
+              handle: wrap.dataset.msgHandle,
+              snippet: wrap.dataset.msgSnippet
+            });
+          }, 500);
+        };
+
+        const cancelPress = () => clearTimeout(pressTimer);
+
+        wrap.addEventListener("touchstart", (e) => {
+          startPress(e);
+          // Double tap detection
+          const now = Date.now();
+          if (now - lastTap < 300) {
+            clearTimeout(pressTimer);
+            window.toggleReaction(wrap.dataset.msgId, '👍');
+          }
+          lastTap = now;
+        }, { passive: true });
+
+        wrap.addEventListener("touchend", cancelPress);
+        wrap.addEventListener("touchmove", cancelPress);
+
+        // Desktop Right Click Trigger
+        wrap.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          openContextMenu({
+            id: wrap.dataset.msgId,
+            uid: wrap.dataset.msgUid,
+            handle: wrap.dataset.msgHandle,
+            snippet: wrap.dataset.msgSnippet
+          });
+        });
+      });
+    }
+
+    function openContextMenu(msg) {
+      activeContextMsg = msg;
+      const isOwnerOrAdmin = currentUser.role === 'owner' || currentUser.role === 'admin';
+      const isMine = msg.uid === currentUser.uid;
+
+      ctxPinBtn.classList.toggle("hidden", !isOwnerOrAdmin);
+      ctxDeleteBtn.classList.toggle("hidden", !(isMine || isOwnerOrAdmin));
+      contextMenuOverlay.classList.remove("hidden");
+    }
+
+    ctxCloseBtn.addEventListener("click", () => contextMenuOverlay.classList.add("hidden"));
+    contextMenuOverlay.addEventListener("click", (e) => {
+      if (e.target === contextMenuOverlay) contextMenuOverlay.classList.add("hidden");
+    });
+
+    ctxReplyBtn.addEventListener("click", () => {
+      if (!activeContextMsg) return;
+      window.setReplyTarget(activeContextMsg.id, activeContextMsg.handle, activeContextMsg.snippet);
+      contextMenuOverlay.classList.add("hidden");
+    });
+
+    ctxPinBtn.addEventListener("click", () => {
+      if (!activeContextMsg) return;
+      window.pinMessage(activeContextMsg.id, activeContextMsg.snippet);
+      contextMenuOverlay.classList.add("hidden");
+    });
+
+    ctxDeleteBtn.addEventListener("click", () => {
+      if (!activeContextMsg) return;
+      window.deleteMessage(activeContextMsg.id, activeContextMsg.uid, activeContextMsg.handle);
+      contextMenuOverlay.classList.add("hidden");
+    });
 
     window.setReplyTarget = function(id, handle, snippet) {
       activeReply = { id, handle, text: snippet };
@@ -1058,7 +1209,7 @@
         el.classList.add('highlight-flash');
         setTimeout(() => el.classList.remove('highlight-flash'), 1500);
       } else {
-        triggerToast("Message not found in recent history", "info");
+        triggerToast("Message not found in recent history");
       }
     };
 
@@ -1118,7 +1269,7 @@
         return;
       }
       if (isCooldown) {
-        triggerToast("Cooldown active (3s limit)", "clock", true);
+        triggerToast("Cooldown active (3s limit)");
         return;
       }
 
@@ -1167,7 +1318,7 @@
         emojiPicker.classList.add("hidden");
       } catch (err) {
         console.error(err);
-        triggerToast("Failed to dispatch message", "alert-circle", true);
+        triggerToast("Failed to send message", "alert-circle", true);
       } finally {
         if (!isCooldown) sendBtn.disabled = false;
       }
@@ -1186,12 +1337,13 @@
       this.style.height = Math.min(this.scrollHeight, 128) + "px";
     });
 
+    // Attachments
     attachmentBtn.addEventListener("click", () => fileInput.click());
     fileInput.addEventListener("change", (e) => {
       const f = e.target.files[0];
       if (!f) return;
       if (f.size > 1.5 * 1024 * 1024) {
-        triggerToast("Image limit is 1.5MB for fast real-time sync", "alert-circle", true);
+        triggerToast("Image limit is 1.5MB");
         return;
       }
       const reader = new FileReader();
@@ -1203,17 +1355,18 @@
         };
         attachmentNameText.textContent = f.name;
         attachmentSizeText.textContent = pendingAttachmentData.size;
+        attachmentPreviewWrapper.innerHTML = `<img src="${re.target.result}" class="w-full h-full object-cover" />`;
         attachmentBar.classList.remove("hidden");
       };
       reader.readAsDataURL(f);
     });
-
     cancelAttachmentBtn.addEventListener("click", () => {
       pendingAttachmentData = null;
       fileInput.value = "";
       attachmentBar.classList.add("hidden");
     });
 
+    // Emojis
     emojiBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       emojiPicker.classList.toggle("hidden");
@@ -1230,7 +1383,7 @@
       }
     });
 
-    // Profile Modal
+    // Profile Setup
     let selectedAvatar = null;
     function openProfileModal(isEditing = false) {
       profileModal.classList.remove("hidden");
@@ -1258,7 +1411,7 @@
       reader.onload = (re) => {
         selectedAvatar = re.target.result;
         modalAvatarPreview.innerHTML = `<img src="${selectedAvatar}" class="w-full h-full object-cover" />`;
-        triggerToast("Avatar loaded", "check");
+        triggerToast("Avatar loaded");
       };
       reader.readAsDataURL(f);
     });
@@ -1266,13 +1419,13 @@
     saveProfileBtn.addEventListener("click", async () => {
       const rawHandle = modalHandleInput.value.trim().toLowerCase().replace(/^@/, '');
       if (!/^[a-zA-Z0-9_]{3,20}$/.test(rawHandle)) {
-        modalHandleStatus.textContent = "Handle must be 3-20 chars alphanumeric or underscore.";
+        modalHandleStatus.textContent = "3-20 characters alphanumeric or underscore only.";
         modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
         return;
       }
 
       saveProfileBtn.disabled = true;
-      saveProfileBtn.textContent = "Verifying...";
+      saveProfileBtn.textContent = "Checking...";
 
       try {
         const usersSnap = await get(ref(db, "tallentex_users"));
@@ -1318,10 +1471,10 @@
 
         updateTopProfileUI();
         profileModal.classList.add("hidden");
-        triggerToast(`Signed in as @${newHandle}`, "check");
+        triggerToast(`Signed in as @${newHandle}`);
       } catch (err) {
         console.error(err);
-        modalHandleStatus.textContent = "Connection error. Please try again.";
+        modalHandleStatus.textContent = "Error saving handle. Please try again.";
         modalHandleStatus.className = "text-[11px] mt-1 text-red-400";
       } finally {
         saveProfileBtn.disabled = false;
@@ -1333,7 +1486,7 @@
     closeGroupInfoBtn.addEventListener("click", () => groupInfoDrawer.classList.add("hidden"));
 
     window.addEventListener("DOMContentLoaded", async () => {
-      lucide.createIcons();
+      initWallpaper();
       const isBanned = await checkBanStatus();
       if (isBanned) return;
 
